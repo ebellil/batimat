@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title materiel.libelle %}
+
+{% block body %}
+	<div class="container">
+		<h3>{{materiel.libelle}}</h3>
+		<p>{{materiel.description}}</p>
+		<h5>En stock {{materiel.stock}}</h5>
+		<div class="row">
+			<div class="input-field col s3">
+	        	<input id="last_name" type="text" class="validate">
+	        	<label for="last_name">Quantité</label>
+	        </div>
+			<a href="#" class="waves-effect waves-light btn-large">Commander</a>
+		</div>
+	</div>
+
+
+{% endblock %}

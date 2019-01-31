@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Matériels' %}
+
+{% block body %}
+	<div class="container">
+		<h1>Matériel</h1>
+		
+		<div>
+			{% for materiel in materiels %}
+				<div class="section">
+					<h5>
+						<a href="{{ path('materiel.show', {id: materiel.idMat, slug: materiel.slug}) }}">{{ materiel.libelle }}</a>
+					</h5>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+
+{% endblock %}
