@@ -4,11 +4,8 @@
 
 {% block body %}
 	<div class="container">
-		<h1>Modifier le matériel</h1>
-		{{ form_start(form) }}
-			{{ form_rest(form) }}
-		{{ form_end(form) }}
+	<h1>Modifier le matériel</h1>
+		{{ include('admin/materiel/_form.html.twig', {button: 'Editer'}) }}
 	</div>
-
 
 {% endblock %}
