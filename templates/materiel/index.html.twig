@@ -10,7 +10,7 @@
 			{% for materiel in materiels %}
 				<div class="section">
 					<h5>
-						<a href="{{ path('materiel.show', {id: materiel.idMat, slug: materiel.slug}) }}">{{ materiel.libelle }}</a>
+						<a href="{{ path('materiel.show', {id: materiel.id, slug: materiel.slug}) }}">{{ materiel.libelle }}</a>
 					</h5>
 				</div>
 			{% endfor %}
