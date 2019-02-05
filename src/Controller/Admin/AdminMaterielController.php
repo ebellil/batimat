@@ -90,7 +90,7 @@ class AdminMaterielController extends AbstractController{
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-	public function edit(Materiel $materiel){
+	public function delete(Materiel $materiel){
 		$this->em->delete($materiel);
 		$this->em->flush();
 		return $this->redirectToRoute('admin.materiel.index');
