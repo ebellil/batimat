@@ -7,6 +7,7 @@ use App\Repository\AdminRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class AdminController extends AbstractController
@@ -102,7 +103,7 @@ class AdminController extends AbstractController
         $entityManager->flush();
         return new Response('Admin deleted : '.$admin->getNom().'  id=   '. $admin->getId());
     }
-
+/*
     public function createAction(Rquest $request){
         $form =$this->createForm(Admin::class);
 
@@ -116,4 +117,5 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin');
         }
     }
+    */
 }

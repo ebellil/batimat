@@ -30,7 +30,7 @@ class AdminMaterielController extends AbstractController{
 
 
 	/**
-	 * @Route("/admin", name="admin.materiel.index")
+	 * @Route("/adminGene", name="admin.materiel.index")
 	 * @return \Symony\Component\HttpFoundation\Response
 	 */
 	public function index(){
@@ -41,7 +41,7 @@ class AdminMaterielController extends AbstractController{
 	}
 
 	/**
-	 * @Route("/admin/materiel/ajouter", name="admin.materiel.new")
+	 * @Route("/adminGene/materiel/ajouter", name="admin.materiel.new")
 	 * @return \Symony\Component\HttpFoundation\Response
 	 */
 	public function new(Request $request){
@@ -62,7 +62,7 @@ class AdminMaterielController extends AbstractController{
 	}
 
 	/**
-	 * @Route("/admin/materiel/{id}", name="admin.materiel.edit", methods="GET|POST")
+	 * @Route("/adminGene/materiel/{id}", name="admin.materiel.edit", methods="GET|POST")
 	 * @param Materiel $materiel
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response
@@ -85,7 +85,7 @@ class AdminMaterielController extends AbstractController{
 
 	
 	/**
-	 * @Route("/admin/materiel/{id}", name="admin.materiel.delete", methods="DELETE")
+	 * @Route("/adminGene/materiel/{id}", name="admin.materiel.delete", methods="DELETE")
 	 * @param Materiel $materiel
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response
