@@ -16,11 +16,11 @@ class Materiel
     /**
      * @var int
      *
-     * @ORM\Column(name="idMat", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idmat;
+    private $id;
 
     /**
      * @var string
@@ -57,9 +57,9 @@ class Materiel
      */
     private $idf;
 
-    public function getIdmat(): ?int
+    public function getId(): ?int
     {
-        return $this->idmat;
+        return $this->id;
     }
 
     public function getLibelle(): ?string

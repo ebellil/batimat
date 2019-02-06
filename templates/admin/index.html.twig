@@ -2,7 +2,7 @@
 
 {% block title %}Hello welcome Admin!{% endblock %}
 {% block body %}
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
@@ -21,20 +21,33 @@
     }
 </style>
 
-<section class="admins">
-<table>
-        <tr>
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Mot de passe</th>
-        </tr>
-{% for admin in admin %}
-        <tr>
-            <td>{{admin.nom}}</td>
-            <td>{{admin.prenom}}</td>
-            <td>{{admin.mdp}}</td>
-        </tr>
-{% endfor %}
+<section class="admins"-->
+<table class="table table-hover table-responsive">
+    <thead>       
+            <tr>
+                <th>id</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Mot de passe</th>
+                <th>Options</th>
+            </tr>
+    </thead>
+
+    <tbody>
+        {% for admin in admin %}
+                <tr>
+                    <td>{{admin.id}}</td>
+                    <td>{{admin.nom}}</td>
+                    <td>{{admin.prenom}}</td>
+                    <td>{{admin.mdp}}</td>
+                    <td>
+                        <a href="#" class="btn btn-default btn-small">Edit</a>
+                        <a href="#" class="btn btn-danger btn-small">Delete</a>
+                    </td>
+                </tr>
+        {% endfor %}
+    </tbody>
+
 </table>
 </section>
 

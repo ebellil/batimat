@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Gérer le matériel' %}
+
+{% block body %}
+	<div class="container">
+		<h1>Gérer le matériel</h1>
+		
+		<div>
+			<table>
+        		<thead>
+          			<tr>
+              			<th>Libellé</th>
+              			<th>Actions</th>
+          			</tr>
+        		</thead>
+        		<tbody>
+        			{% for materiel in materiels %}
+			        <tr>
+			            <td>{{materiel.libelle}}</td>
+			            <td>
+			            	<a href="{{ path('admin.materiel.edit', {id: materiel.id}) }}" class="waves-effect waves-light btn">Editer</a>
+			            </td>
+			        </tr>
+			        {% endfor %}
+        		</tbody>
+      		</table>
+      		<div class="row">
+      			<a href="{{ path('admin.materiel.new') }}" class="waves-effect waves-light btn">Ajouter</a>
+      		</div>
+		</div>
+	</div>
+
+
+{% endblock %}

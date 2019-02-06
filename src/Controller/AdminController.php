@@ -103,5 +103,17 @@ class AdminController extends AbstractController
         return new Response('Admin deleted : '.$admin->getNom().'  id=   '. $admin->getId());
     }
 
+    public function createAction(Rquest $request){
+        $form =$this->createForm(Admin::class);
 
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $admin = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($admin);
+            $em->flush();
+            return $this->redirectToRoute('admin');
+        }
+    }
 }
