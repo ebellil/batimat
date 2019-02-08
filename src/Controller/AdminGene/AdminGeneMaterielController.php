@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\AdminGene;
 
 use App\Entity\Materiel;
 use App\Form\MaterielType;
@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-class AdminMaterielController extends AbstractController{
+class AdminGeneMaterielController extends AbstractController{
 
 	/**
 	 *@var MaterielRepository
@@ -30,18 +30,26 @@ class AdminMaterielController extends AbstractController{
 
 
 	/**
+<<<<<<< HEAD:src/Controller/Admin/AdminMaterielController.php
 	 * @Route("/adminGene", name="admin.materiel.index")
+=======
+	 * @Route("/adminGene", name="adminGene.materiel.index")
+>>>>>>> e6e0621337e78c935d99d99d178f954752e86ef7:src/Controller/AdminGene/AdminGeneMaterielController.php
 	 * @return \Symony\Component\HttpFoundation\Response
 	 */
 	public function index(){
 
 		$materiels = $this->repository->findAll();
-		return $this->render('admin/materiel/index.html.twig', compact('materiels'));
+		return $this->render('adminGene/materiel/index.html.twig', compact('materiels'));
 	
 	}
 
 	/**
+<<<<<<< HEAD:src/Controller/Admin/AdminMaterielController.php
 	 * @Route("/adminGene/materiel/ajouter", name="admin.materiel.new")
+=======
+	 * @Route("/adminGene/materiel/ajouter", name="adminGene.materiel.new")
+>>>>>>> e6e0621337e78c935d99d99d178f954752e86ef7:src/Controller/AdminGene/AdminGeneMaterielController.php
 	 * @return \Symony\Component\HttpFoundation\Response
 	 */
 	public function new(Request $request){
@@ -52,17 +60,21 @@ class AdminMaterielController extends AbstractController{
 		if($form->isSubmitted() && $form->isValid()){
 			$this->em->persist($materiel);
 			$this->em->flush();
-			return $this->redirectToRoute('admin.materiel.index');
+			return $this->redirectToRoute('adminGene.materiel.index');
 		}
 
-		return $this->render('admin/materiel/new.html.twig', [
+		return $this->render('adminGene/materiel/new.html.twig', [
 			'materiel' => $materiel,
 			'form' => $form->createView()
 		]);
 	}
 
 	/**
+<<<<<<< HEAD:src/Controller/Admin/AdminMaterielController.php
 	 * @Route("/adminGene/materiel/{id}", name="admin.materiel.edit", methods="GET|POST")
+=======
+	 * @Route("/adminGene/materiel/{id}", name="adminGene.materiel.edit", methods="GET|POST")
+>>>>>>> e6e0621337e78c935d99d99d178f954752e86ef7:src/Controller/AdminGene/AdminGeneMaterielController.php
 	 * @param Materiel $materiel
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response
@@ -74,10 +86,10 @@ class AdminMaterielController extends AbstractController{
 
 		if($form->isSubmitted() && $form->isValid()){
 			$this->em->flush();
-			return $this->redirectToRoute('admin.materiel.index');
+			return $this->redirectToRoute('adminGene.materiel.index');
 		}
 		
-		return $this->render('admin/materiel/edit.html.twig', [
+		return $this->render('adminGene/materiel/edit.html.twig', [
 			'materiel' => $materiel,
 			'form' => $form->createView()
 		]);
@@ -85,15 +97,21 @@ class AdminMaterielController extends AbstractController{
 
 	
 	/**
+<<<<<<< HEAD:src/Controller/Admin/AdminMaterielController.php
 	 * @Route("/adminGene/materiel/{id}", name="admin.materiel.delete", methods="DELETE")
+=======
+	 * @Route("/adminGene/materiel/{id}", name="adminGene.materiel.delete", methods="DELETE")
+>>>>>>> e6e0621337e78c935d99d99d178f954752e86ef7:src/Controller/AdminGene/AdminGeneMaterielController.php
 	 * @param Materiel $materiel
 	 * @param Request $request
-	 * @return \Symfony\Component\HttpFoundation\Response
+	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
 	 */
-	public function delete(Materiel $materiel){
-		$this->em->delete($materiel);
-		$this->em->flush();
-		return $this->redirectToRoute('admin.materiel.index');
+	public function delete(Materiel $materiel, Request $request){
+		if($this->isCsrfTokenValid('delete' . $materiel->getId(), $request->get('_token'))){
+			$this->em->remove($materiel);
+			$this->em->flush();
+		}
+		return $this->redirectToRoute('adminGene.materiel.index');
 	}
 
 }
