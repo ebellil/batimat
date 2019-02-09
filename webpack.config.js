@@ -17,8 +17,10 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if you JavaScript imports CSS.
      */
-    .addEntry('app', './assets/js/app.js')
-    //.addEntry('page1', './assets/js/page1.js')
+    .addEntry('js/materialize', './assets/js/bin/materialize.js')
+    .addEntry('js/materialize.min', './assets/js/bin/materialize.min.js')
+    .addEntry('js/jquery-3.3.1.min', './assets/js/bin/jquery-3.3.1.min.js')
+    .addStyleEntry('css/materialize', './assets/css/sass/materialize.scss')
     //.addEntry('page2', './assets/js/page2.js')
 
     // will require an extra script tag for runtime.js
@@ -39,7 +41,7 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     // enables Sass/SCSS support
-    //.enableSassLoader()
+    .enableSassLoader()
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()

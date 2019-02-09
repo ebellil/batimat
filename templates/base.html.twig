@@ -5,10 +5,7 @@
         <meta charset="UTF-8">
         <title>{% block title %}{% endblock %}</title>
         {% block stylesheets %} 
-					{% stylesheets filter="sass"
-    			'@AppBundle/Resources/public/materialize-src/sass/materialize.scss' %}
-      
-    			{% endstylesheets %}   
+						<link rel="stylesheet" href="{{asset("build/css/app.css")}}">
   			{% endblock %}
     </head>
     <body>	
@@ -27,15 +24,7 @@
         	</header>
         {% block body %}{% endblock %}
         {% block javascripts %}
-          {% block javascripts %}
-            {% javascripts
-            '@AppBundle/Resources/public/jquery-3.3.1.min.js'
-            '@AppBundle/Resources/public/materialize-src/js/*'            
-            %}
-            
-            {% endjavascripts %}
-     
-    
+            <script src="{{asset('build/js/app.js')}}"></script>
         {% endblock %}
 
   		
