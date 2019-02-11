@@ -1,0 +1,30 @@
+{
+  "entrypoints": {
+    "js/materialize": {
+      "js": [
+        "/build/runtime.js",
+        "/build/js/materialize.js"
+      ]
+    },
+    "js/materialize.min": {
+      "js": [
+        "/build/runtime.js",
+        "/build/js/materialize.min.js"
+      ]
+    },
+    "js/jquery-3.3.1.min": {
+      "js": [
+        "/build/runtime.js",
+        "/build/js/jquery-3.3.1.min.js"
+      ]
+    },
+    "css/materialize": {
+      "js": [
+        "/build/runtime.js"
+      ],
+      "css": [
+        "/build/css/materialize.css"
+      ]
+    }
+  }
+}
