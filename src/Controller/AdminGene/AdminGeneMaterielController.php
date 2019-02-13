@@ -51,6 +51,7 @@ class AdminGeneMaterielController extends AbstractController{
 
 		if($form->isSubmitted() && $form->isValid()){
 			$this->em->persist($materiel);
+			$this->addFlash('success', 'Le matériel a bien été ajouté');
 			$this->em->flush();
 			return $this->redirectToRoute('adminGene.materiel.index');
 		}
@@ -74,6 +75,7 @@ class AdminGeneMaterielController extends AbstractController{
 
 		if($form->isSubmitted() && $form->isValid()){
 			$this->em->flush();
+			$this->addFlash('success', 'Le matériel a bien été modifié');
 			return $this->redirectToRoute('adminGene.materiel.index');
 		}
 		
@@ -93,6 +95,7 @@ class AdminGeneMaterielController extends AbstractController{
 	public function delete(Materiel $materiel, Request $request){
 		if($this->isCsrfTokenValid('delete' . $materiel->getId(), $request->get('_token'))){
 			$this->em->remove($materiel);
+			$this->addFlash('success', 'Le matériel a bien été supprimé');
 			$this->em->flush();
 		}
 		return $this->redirectToRoute('adminGene.materiel.index');

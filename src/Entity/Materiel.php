@@ -51,6 +51,12 @@ class Materiel
     private $idcat;
 
     /**
+    * @ORM\ManyToMany (targetEntity="Categorie::class")
+    * @ORM\JoinColumn(name="categorie", referencedColumnName="idCat")
+    */
+    private $categorie;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="idF", type="integer", nullable=false)
@@ -114,6 +120,12 @@ class Materiel
 
         return $this;
     }
+
+     public function getCategorie(): Categorie
+    {
+        return $this->$categorie;
+    }
+
 
     public function getIdf(): ?int
     {
