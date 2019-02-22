@@ -2,29 +2,30 @@
 
 namespace App\Form;
 
-use App\Entity\Materiel;
+use App\Entity\Fournisseur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MaterielType extends AbstractType
+class FournisseurType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('libelle')
-            ->add('description')
-            ->add('stock')
-            ->add('categorie', CategorieType::class)
-            ->add('fournisseur', FournisseurType::class)
-
+            ->add('matriculef')
+            ->add('raisonsociale')
+            ->add('adresse')
+            ->add('ville')
+            ->add('pays')
+            ->add('noteglobale')
+            ->add('rapportecrit')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Materiel::class,
+            'data_class' => Fournisseur::class,
         ]);
     }
 }

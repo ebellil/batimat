@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Categorie;
+use App\Entity\Fournisseur;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -51,8 +53,8 @@ class Materiel
     private $idcat;
 
     /**
-    * @ORM\ManyToMany (targetEntity="Categorie::class")
-    * @ORM\JoinColumn(name="categorie", referencedColumnName="idCat")
+    * @ORM\ManyToMany (targetEntity="Categorie")
+    * @ORM\JoinColumn(name="idCat", referencedColumnName="id")
     */
     private $categorie;
 
@@ -62,6 +64,12 @@ class Materiel
      * @ORM\Column(name="idF", type="integer", nullable=false)
      */
     private $idf;
+
+     /**
+    * @ORM\ManyToMany (targetEntity="Fournisseur")
+    * @ORM\JoinColumn(name="idF", referencedColumnName="id")
+    */
+     private $fournisseur;
 
     public function getId(): ?int
     {
@@ -121,9 +129,16 @@ class Materiel
         return $this;
     }
 
-     public function getCategorie(): Categorie
+    public function getCategorie()
     {
-        return $this->$categorie;
+        return $this->categorie;
+    }
+
+    public function setCategorie($categorie)
+    {
+        $this->categorie = $categorie;
+
+        return $this;
     }
 
 
@@ -135,6 +150,18 @@ class Materiel
     public function setIdf(int $idf): self
     {
         $this->idf = $idf;
+
+        return $this;
+    }
+
+   public function getFournisseur(): Fournisseur
+    {
+        return $this->fournisseur;
+    }
+
+   public function setFournisseur($fournisseur)
+    {
+        $this->fournisseur = $fournisseur;
 
         return $this;
     }
