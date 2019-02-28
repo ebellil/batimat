@@ -17,8 +17,6 @@ class FournisseurType extends AbstractType
             ->add('adresse')
             ->add('ville')
             ->add('pays')
-            ->add('noteglobale')
-            ->add('rapportecrit')
         ;
     }
 

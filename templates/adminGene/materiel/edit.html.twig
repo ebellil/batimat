@@ -1,11 +1,20 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseAdminGene.html.twig' %}
 
 {% block title 'Modifier le matériel' %}
 
 {% block body %}
 	<div class="container">
 	<h1>Modifier le matériel</h1>
-		{{ include('adminGene/materiel/_form.html.twig', {button: 'Editer'}) }}
+		{{ include('adminGene/form/_form.html.twig', {button: 'Editer'}) }}
 	</div>
 
+{% endblock %}
+
+{% block javascripts %}
+   
+     <script type="text/javascript"> 
+   $(document).ready(function(){
+    $('select').formSelect();
+  });
+    </script>
 {% endblock %}

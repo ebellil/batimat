@@ -55,7 +55,15 @@ class Materiel
     /**
     * @ORM\ManyToMany (targetEntity="Categorie")
     * @ORM\JoinColumn(name="idCat", referencedColumnName="id")
-    */
+    
+    private $categorie;*/
+
+     /**
+     * @var Categorie
+    
+     * @ORM\OneToOne(targetEntity="Categorie")
+     * @ORM\JoinColumn(name="idCat", referencedColumnName="id")
+     */
     private $categorie;
 
     /**
@@ -66,7 +74,7 @@ class Materiel
     private $idf;
 
      /**
-    * @ORM\ManyToMany (targetEntity="Fournisseur")
+    * @ORM\ManyToOne (targetEntity="Fournisseur")
     * @ORM\JoinColumn(name="idF", referencedColumnName="id")
     */
      private $fournisseur;
@@ -129,11 +137,17 @@ class Materiel
         return $this;
     }
 
+
+   /**
+    * @return  self
+    */
     public function getCategorie()
     {
         return $this->categorie;
     }
 
+
+    
     public function setCategorie($categorie)
     {
         $this->categorie = $categorie;
@@ -154,10 +168,14 @@ class Materiel
         return $this;
     }
 
-   public function getFournisseur(): Fournisseur
+   /**
+    * @return  self
+    */
+   public function getFournisseur()
     {
         return $this->fournisseur;
     }
+
 
    public function setFournisseur($fournisseur)
     {

@@ -18,8 +18,8 @@ class AgentFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $agent = new Agent();
-        $agent->setLogin('testAdminGene');
-        $agent->setMdp($this->encoder->encodePassword($agent, 'testAdminGene'));
+        $agent->setLogin('testAgentAff');
+        $agent->setMdp($this->encoder->encodePassword($agent, 'testAgentAff'));
         $agent->setNom('testNom');
         $agent->setPrenom('testPrenom');
 		$agent->setAdresse('testAdresse');

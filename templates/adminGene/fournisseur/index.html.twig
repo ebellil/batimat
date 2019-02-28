@@ -1,0 +1,48 @@
+{% extends 'baseAdminGene.html.twig' %}
+
+{% block title 'Gérer les fournisseurs' %}
+
+{% block body %}
+	<div class="container">
+		<h1>Gérer les fournisseurs</h1>
+		
+		{% for message in app.flashes('success') %}
+			<div class="card-panel green accent-3">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+		<div>
+			<table>
+        		<thead>
+          			<tr>
+              			<th>Libellé</th>
+              			<th>Actions</th>
+          			</tr>
+        		</thead>
+        		<tbody>
+        			{% for fournisseur in fournisseurs %}
+			        <tr>
+			            <td>{{fournisseur.matriculeF}}</td>
+			            <td>
+			            	<a href="{{ path('adminGene.fournisseur.edit', {id: fournisseur.id}) }}" class="waves-effect waves-light btn">Editer</a>
+			            </td>
+			            <td>
+			            	<form method="post" action="{{ path('adminGene.fournisseur.delete', {id: fournisseur.id}) }}">
+			            		<input type="hidden" name="_method" value="DELETE">
+			            		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ fournisseur.id) }}">
+			            		<button class="btn waves-effect waves-light">Supprimer</button>
+			            	</form>
+			            </td>
+			        </tr>
+			        {% endfor %}
+        		</tbody>
+      		</table>
+      		<div class="row">
+      			<a href="{{ path('adminGene.fournisseur.new') }}" class="waves-effect waves-light btn">Ajouter</a>
+      		</div>
+		</div>
+	</div>
+
+
+{% endblock %}
