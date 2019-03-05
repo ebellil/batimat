@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Agent
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="agent")
  * @ORM\Entity(repositoryClass="App\Repository\AgentRepository")
  */
-class Agent
+class Agent implements UserInterface, \Serializable
 {
     /**
      * @var int
@@ -55,6 +56,8 @@ class Agent
      * @ORM\Column(name="adresse", type="string", length=255, nullable=false)
      */
     private $adresse;
+
+
 
     public function getId(): ?int
     {
@@ -121,5 +124,48 @@ class Agent
         return $this;
     }
 
+    public function getUsername() {
+        return $this->login;
+    }
+
+    
+
+    public function getPassword() {
+        return $this->mdp;
+    }
+
+
+    public function getRoles(){
+        return ['ROLE_ADMIN'];
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSalt(){
+        return null;
+    }
+
+    /**
+     * 
+     */
+    public function eraseCredentials(){
+    }
+
+    public function serialize(){
+        return serialize([
+            $this->id,
+            $this->login,
+            $this->mdp
+        ]);
+    }
+
+    public function unserialize($serialized){
+        list(
+            $this->id,
+            $this->login,
+            $this->mdp
+        ) = unserialize($serialized, ['allowed_classes' => false]);
+    }
 
 }

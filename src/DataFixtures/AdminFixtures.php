@@ -10,13 +10,13 @@ class AdminFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        for($i=1; $i <= 10; $i++){
+       /* for($i=1; $i <= 10; $i++){
             $admin = new Admin();
             $admin->setNom("Nom n°$i")
                   ->setPrenom("Prenom n°$i")
                   ->setMdp("Mdp n°$i");
             $manager->persist($admin);
         }
-        $manager->flush();
+        $manager->flush();*/
     }
 }

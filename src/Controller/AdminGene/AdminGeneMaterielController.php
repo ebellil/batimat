@@ -30,11 +30,7 @@ class AdminGeneMaterielController extends AbstractController{
 
 
 	/**
-<<<<<<< HEAD:src/Controller/Admin/AdminMaterielController.php
-	 * @Route("/adminGene", name="admin.materiel.index")
-=======
-	 * @Route("/adminGene", name="adminGene.materiel.index")
->>>>>>> e6e0621337e78c935d99d99d178f954752e86ef7:src/Controller/AdminGene/AdminGeneMaterielController.php
+	 * @Route("/adminGene/materiel", name="adminGene.materiel.index")
 	 * @return \Symony\Component\HttpFoundation\Response
 	 */
 	public function index(){
@@ -45,11 +41,7 @@ class AdminGeneMaterielController extends AbstractController{
 	}
 
 	/**
-<<<<<<< HEAD:src/Controller/Admin/AdminMaterielController.php
-	 * @Route("/adminGene/materiel/ajouter", name="admin.materiel.new")
-=======
 	 * @Route("/adminGene/materiel/ajouter", name="adminGene.materiel.new")
->>>>>>> e6e0621337e78c935d99d99d178f954752e86ef7:src/Controller/AdminGene/AdminGeneMaterielController.php
 	 * @return \Symony\Component\HttpFoundation\Response
 	 */
 	public function new(Request $request){
@@ -59,6 +51,7 @@ class AdminGeneMaterielController extends AbstractController{
 
 		if($form->isSubmitted() && $form->isValid()){
 			$this->em->persist($materiel);
+			$this->addFlash('success', 'Le matériel a bien été ajouté');
 			$this->em->flush();
 			return $this->redirectToRoute('adminGene.materiel.index');
 		}
@@ -70,11 +63,7 @@ class AdminGeneMaterielController extends AbstractController{
 	}
 
 	/**
-<<<<<<< HEAD:src/Controller/Admin/AdminMaterielController.php
-	 * @Route("/adminGene/materiel/{id}", name="admin.materiel.edit", methods="GET|POST")
-=======
 	 * @Route("/adminGene/materiel/{id}", name="adminGene.materiel.edit", methods="GET|POST")
->>>>>>> e6e0621337e78c935d99d99d178f954752e86ef7:src/Controller/AdminGene/AdminGeneMaterielController.php
 	 * @param Materiel $materiel
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response
@@ -86,6 +75,7 @@ class AdminGeneMaterielController extends AbstractController{
 
 		if($form->isSubmitted() && $form->isValid()){
 			$this->em->flush();
+			$this->addFlash('success', 'Le matériel a bien été modifié');
 			return $this->redirectToRoute('adminGene.materiel.index');
 		}
 		
@@ -97,11 +87,7 @@ class AdminGeneMaterielController extends AbstractController{
 
 	
 	/**
-<<<<<<< HEAD:src/Controller/Admin/AdminMaterielController.php
-	 * @Route("/adminGene/materiel/{id}", name="admin.materiel.delete", methods="DELETE")
-=======
 	 * @Route("/adminGene/materiel/{id}", name="adminGene.materiel.delete", methods="DELETE")
->>>>>>> e6e0621337e78c935d99d99d178f954752e86ef7:src/Controller/AdminGene/AdminGeneMaterielController.php
 	 * @param Materiel $materiel
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -109,6 +95,7 @@ class AdminGeneMaterielController extends AbstractController{
 	public function delete(Materiel $materiel, Request $request){
 		if($this->isCsrfTokenValid('delete' . $materiel->getId(), $request->get('_token'))){
 			$this->em->remove($materiel);
+			$this->addFlash('success', 'Le matériel a bien été supprimé');
 			$this->em->flush();
 		}
 		return $this->redirectToRoute('adminGene.materiel.index');

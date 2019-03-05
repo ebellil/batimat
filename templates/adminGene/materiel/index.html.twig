@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseAdminGene.html.twig' %}
 
 {% block title 'Gérer le matériel' %}
 
@@ -6,6 +6,12 @@
 	<div class="container">
 		<h1>Gérer le matériel</h1>
 		
+		{% for message in app.flashes('success') %}
+			<div class="card-panel green accent-3">
+				{{ message }}
+			</div>
+		{% endfor %}
+
 		<div>
 			<table>
         		<thead>
