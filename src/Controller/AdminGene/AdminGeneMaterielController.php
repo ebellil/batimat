@@ -3,6 +3,7 @@
 namespace App\Controller\AdminGene;
 
 use App\Entity\Materiel;
+use App\Entity\Fournisseur;
 use App\Form\MaterielType;
 use App\Repository\MaterielRepository;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -69,6 +70,7 @@ class AdminGeneMaterielController extends AbstractController{
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
 	public function edit(Materiel $materiel, Request $request){
+
 
 		$form = $this->createForm(MaterielType::class, $materiel);
 		$form->handleRequest($request);

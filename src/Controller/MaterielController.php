@@ -7,6 +7,8 @@ use App\Repository\MaterielRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
 
 class MaterielController extends AbstractController{
 
@@ -23,19 +25,20 @@ class MaterielController extends AbstractController{
 	*@Route("/materiel", name="materiel.index")
 	*@return Response
 	*/
-	public function index(): Response{
-
-	/*	$materiel = new Materiel();
-		$materiel->setLibelle("TestMateriel1")
-				->setStock(200)
-				->setIdCat(1)
-				->setIdF(1);
-		$em = $this->getDoctrine()->getManager();
-		$em->persist($materiel);
-		$em->flush();	*/	
-		$materiels = $this->repository->findAll();
+	public function index(PaginatorInterface $paginator, Request $request): Response
+	{
+		//Paginator permet de mettre n materiel dans une page
+		$materiels = $paginator->paginate(
+			$this->repository->findAll(),
+			$request->query->getInt('page', 1),
+			5
+		);
+	
 		
-		return $this->render('materiel/index.html.twig', ['materiels' => $materiels]);
+		return $this->render('materiel/index.html.twig', [
+			'current_menu' => 'materiels',
+			'materiels' => $materiels
+		]);
 
 	}
 

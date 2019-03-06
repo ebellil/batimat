@@ -6,6 +6,7 @@
         <title>{% block title %}{% endblock %}</title>
         {% block stylesheets %} 
         <link href="{{ asset('build/css/materialize.min.css') }}" rel="stylesheet"/>
+          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   			{% endblock %}
     </head>
     <body>	
@@ -18,7 +19,9 @@
                 <li><a href="{{ path('adminGene.fournisseur.index') }}">Fournisseurs</a></li>
                 <li><a href="{{ path('adminGene.materiel.index') }}">Matériels</a></li>
                 <li><a href="{{ path('adminGene.categorie.index') }}">Catégories</a></li>   
-                <li><a href="{{ path('logout') }}">Se déconnecter</a></li>            
+                {% if app.user %}
+                <li><a href="{{ path('logout') }}">Se déconnecter</a></li>
+                {% endif %}          
               </ul>
             </div>
 				  </nav>

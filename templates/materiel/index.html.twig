@@ -8,14 +8,16 @@
 		
 		<div>
 			{% for materiel in materiels %}
-				<div class="section">
-					<h5>
-						<a href="{{ path('materiel.show', {id: materiel.id, slug: materiel.slug}) }}">{{ materiel.libelle }}</a>
-					</h5>
-				</div>
+				{% include 'materiel/_materiel.html.twig' %}
 			{% endfor %}
 		</div>
+		<div>
+    		{{ knp_pagination_render(materiels) }}
+		</div>
 	</div>
+
+
+ 
 
 
 {% endblock %}

@@ -3,9 +3,10 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}{% endblock %}</title>
+        <title>{% block title %}Batimat{% endblock %}</title>
         {% block stylesheets %} 
         <link href="{{ asset('build/css/materialize.min.css') }}" rel="stylesheet"/>
+          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   			{% endblock %}
     </head>
     <body>	
@@ -20,8 +21,10 @@
                
          
 				          <li><a href="{{ path('materiel.index') }}">Matériels</a></li>
+                 {% if app.user %}
 				          <li><a href="{{ path('logout') }}">Se déconnecter</a></li>
-				        </ul>
+				        {% endif %}
+                </ul>
                
 				      </div>
 				    </nav>
