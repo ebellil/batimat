@@ -17,13 +17,13 @@ class AgentFixtures extends Fixture
 	}
     public function load(ObjectManager $manager)
     {
-        $agent = new Agent();
+       /* $agent = new Agent();
         $agent->setLogin('testAgentAff');
         $agent->setMdp($this->encoder->encodePassword($agent, 'testAgentAff'));
         $agent->setNom('testNom');
         $agent->setPrenom('testPrenom');
 		$agent->setAdresse('testAdresse');
         $manager->persist($agent);
-        $manager->flush();
+        $manager->flush();*/
     }
 }

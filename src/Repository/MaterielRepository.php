@@ -19,6 +19,14 @@ class MaterielRepository extends ServiceEntityRepository
         parent::__construct($registry, Materiel::class);
     }
 
+    public function materielDispo(){
+        return $this->createQueryBuilder('m')
+            ->where('m.stock != 0')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Materiel[] Returns an array of Materiel objects
     //  */

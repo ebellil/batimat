@@ -6,7 +6,18 @@
 	<div class="container">
 		<h3>{{materiel.libelle}}</h3>
 
+		{% if materiel.fileName %}
+	        <div class="row">
+	        <div class="input-field col s3">
+	        	<img class="responsive-img" src="../{{ vich_uploader_asset(materiel, 'imageFile')  }}">
+	        	</div>
+	        </div>
+        {% endif %}
+
+
 		<h6>Description</h6>
+
+		
 		<p>{{materiel.description}}</p>
 
 		<h5>En stock {{materiel.stock}}</h5>

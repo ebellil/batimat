@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -69,6 +71,19 @@ class Fournisseur
      * @ORM\Column(name="RapportEcrit", type="text", length=65535, nullable=false)
      */
     private $rapportecrit;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Materiel", mappedBy="fournisseur")
+     */
+    private $materiel;
+
+
+    public function __construct()
+    {
+        $this->materiels = new ArrayCollection();
+        $this->materiel = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -155,6 +170,37 @@ class Fournisseur
     public function setRapportecrit(string $rapportecrit): self
     {
         $this->rapportecrit = $rapportecrit;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Materiel[]
+     */
+    public function getMateriel(): Collection
+    {
+        return $this->materiel;
+    }
+
+    public function addMateriel(Materiel $materiel): self
+    {
+        if (!$this->materiel->contains($materiel)) {
+            $this->materiel[] = $materiel;
+            $materiel->setFournisseur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMateriel(Materiel $materiel): self
+    {
+        if ($this->materiel->contains($materiel)) {
+            $this->materiel->removeElement($materiel);
+            // set the owning side to null (unless already changed)
+            if ($materiel->getFournisseur() === $this) {
+                $materiel->setFournisseur(null);
+            }
+        }
 
         return $this;
     }
