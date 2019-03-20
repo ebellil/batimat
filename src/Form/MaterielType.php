@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class MaterielType extends AbstractType
 {
@@ -30,9 +32,16 @@ class MaterielType extends AbstractType
                 'choice_label' => 'MatriculeF',//permet de mettre le libelle dans le formulaire
 
             ))
-            ->add('imageFile', FileType::class, [
-                'required' => false
-            ])
+          /*  ->add('image', CollectionType::class, array(
+                'entry_type' => ImageType::class, 
+                'entry_options' => array('label' => false), 
+                'allow_add' => true, 'allow_add' => true,
+            ))*/
+           
+            /*->add('imageFile', FileType::class, [
+                'required' => false*/
+            ->add('attachPictures', FileType::class, ['multiple'=>true, 'required'=>false])
+            
         ;
     }
 

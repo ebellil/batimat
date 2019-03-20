@@ -3,6 +3,8 @@ namespace App\Entity;
 use App\Entity\Categorie;
 use App\Entity\Fournisseur;
 use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
@@ -12,10 +14,8 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**
  * Materiel
- *
  * @ORM\Table(name="materiel", indexes={@ORM\Index(name="materiel_ibfk_1", columns={"idCat"}), @ORM\Index(name="idF", columns={"idF"})})
  * @ORM\Entity(repositoryClass="App\Repository\MaterielRepository")
- * @Vich\Uploadable
  */
 class Materiel
 {
@@ -47,36 +47,7 @@ class Materiel
      */
 
     private $stock;
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="idCat", type="integer", nullable=false)
-     */
-
-    private $idcat;
-    /**
-    * @ORM\ManyToMany (targetEntity="Categorie")
-    * @ORM\JoinColumn(name="idCat", referencedColumnName="id")
-    private $categorie;*/
-     /**
-     * @var Categorie
-    
-     * @ORM\OneToOne(targetEntity="Categorie")
-     * @ORM\JoinColumn(name="idCat", referencedColumnName="id")
- 
-    private $categorie;    */
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="idF", type="integer", nullable=false)
-     */
-    private $idf;
-     /**
-    * @ORM\ManyToOne (targetEntity="Fournisseur")
-    * @ORM\JoinColumn(name="idF", referencedColumnName="id")
-    
-     private $fournisseur;
-*/
+  
      /**
       * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="materiel")
       * @ORM\JoinColumn(name="idCat", referencedColumnName="id", nullable=false)
@@ -89,26 +60,17 @@ class Materiel
       */
      private $fournisseur;
 
-       /**
-     * @var string|null
-     * @ORM\Column(name="fileName", type="string", length=255)
-     */
-    private $fileName;
-
     /**
-     * @var File|null
-     * @Assert\Image(
-     *      mimeTypes="image/jpeg"
-     * )
-     * @Vich\UploadableField(mapping="materiel_image", fileNameProperty="fileName")
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="materiel",cascade={"persist"}, orphanRemoval=true)
+     * @Vich\UploadableField(mapping="materiel_image")
      */
-    private $imageFile;
+    private $images;
 
-    /**
-     * @ORM\Column(type="datetime")
-     *
-     */
-    private $updated_at;
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -171,96 +133,69 @@ class Materiel
 
         return $this;
     }
-
-
+    
     /**
-     * @return null|File
+     * @return ArrayCollection
      */
-    public function getImageFile(): ?File
+    public function getImages()
     {
-        return $this->imageFile;
+        return $this->images;
+    }
+
+    public function getImageF()
+    {
+        return $this->images->first() ;
     }
 
     /**
-     * @param null|File $imageFile
-     * @return Materiel
+     * @param ArrayCollection $images
      */
-    public function setImageFile(?File $imageFile): Materiel
+    public function setImages($images)
     {
-        $this->imageFile = $imageFile;
-        if (null !== $this->imageFile) {
-            $this->updated_at = new \DateTime('now');
+        $this->images = $images;
+    }
+
+    public function getAttachPictures()
+    {
+        return null;
+    }
+
+    public function setAttachPictures(array $files=array())
+    {
+        if (!$files) return [];
+        foreach ($files as $file) {
+            if (!$file) return [];
+            $this->attachPicture($file);
         }
-
-        return $this;
+        return [];
     }
 
-    /**
-     * @return null|string
-     */
-    public function getFileName(): ?string
-    {
-        return $this->fileName;
+    public function attachPicture(UploadedFile $file=null) { 
+        if (!$file) { 
+            return; 
+        } 
+        $image = new Image();
+        $image->setImageFile($file);
+        $this->addImage($image); 
     }
-
-    /**
-     * @param null|string $fileName
-     * @return Materiel
-     */
-    public function setFileName(?string $fileName): void
-    {
-        $this->fileName = $fileName;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updated_at;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updated_at): self
-    {
-        $this->updated_at = $updated_at;
-
-        return $this;
-    }
-
     
 
+    public function addImage(Image $image)
+    {
+      
+            $image->setMateriel($this);
+            dump($image);
+            $this->images->add($image);
+       
 
- 
-   /**
-    * @return  self
+     
+    }
+
+    public function removeImage(Image $image)
+    {
+        $image->setMateriel(null);
+       $this->images->removeElement($image);
+    }
+
    
-   public function getFournisseur()
-    {
-        return $this->fournisseur;
-    }
-   public function setFournisseur($fournisseur)
-    {
-        $this->fournisseur = $fournisseur;
-        return $this;
-    }
- */
-
-    /*
-     public function getIdcat(): ?int
-    {
-        return $this->idcat;
-    }
-    public function setIdcat(int $idcat): self
-    {
-        $this->idcat = $idcat;
-        return $this;
-    }
-
-       public function getIdf(): ?int
-    {
-        return $this->idf;
-    }
-    public function setIdf(int $idf): self
-    {
-        $this->idf = $idf;
-        return $this;
-    }
-    */
 }
