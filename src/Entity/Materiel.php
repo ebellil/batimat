@@ -67,18 +67,10 @@ class Materiel
      */
     private $images;
 
-<<<<<<< HEAD
-    /**
-     * @ORM\Column(name="updated_at", type="datetime")
-     *
-     */
-    private $updated_at;
-=======
     public function __construct()
     {
         $this->images = new ArrayCollection();
     }
->>>>>>> 377d09bdaaa1e735e051bcb1bc5be10af07f2999
 
     public function getId(): ?int
     {
