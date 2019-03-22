@@ -105,7 +105,7 @@ class Materiel
     private $imageFile;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime")
      *
      */
     private $updated_at;

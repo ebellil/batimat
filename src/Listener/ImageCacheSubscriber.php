@@ -5,7 +5,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
-
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 class ImageCacheSubscriber implements EventSubscriber{
 
 	/**

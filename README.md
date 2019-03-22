@@ -1,13 +1,36 @@
 M1 project batimat with Symfony 4
 =================================
 
+## Windows environement
+install Visual Studio Code
+install wamp server
+install composer
+add bin php file on environement path
+
+
+## Linux environement
+sudo apt-get install php7-gd
+sudo-apt get install php7.2-intl
+sudo apt-get install php7.2-xsl
+sudo apt-get install php-soap
+sudo apt install mysql-server
+
+
 ## Getting Started
 Clone this project using the following commands:
+
 
 ```
 git clone git@github.com:ebellil/batimat.git
 cd batimat
 ```
+
+or if you use https
+```
+https://github.com/ebellil/batimat.git
+cd batimat
+```
+
 ## Setup the project
 
 If you've just downloaded the code, congratulations!
