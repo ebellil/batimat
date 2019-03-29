@@ -45,6 +45,11 @@ class Agentaffagence
      */
     private $id;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Agent", inversedBy="agentaffagence", cascade={"persist", "remove"})
+     */
+    private $agent;
+
     public function getMatriculeag(): ?string
     {
         return $this->matriculeag;
@@ -93,5 +98,17 @@ class Agentaffagence
         return $this;
     }
 
+    public function getAgent(): ?Agent
+    {
+        return $this->agent;
+    }
+/*
+    public function setAgent(?Agent $agent): self
+    {
+        $this->agent = $agent;
+
+        return $this;
+    }
+*/
 
 }

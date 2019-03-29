@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="agent")
  * @ORM\Entity(repositoryClass="App\Repository\AgentRepository")
  */
-class Agent implements UserInterface, \Serializable
+class Agent
 {
     /**
      * @var int
@@ -25,91 +25,23 @@ class Agent implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="login", type="string", length=255, nullable=false)
-     */
-    private $login;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mdp", type="string", length=255, nullable=false)
-     */
-    private $mdp;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nom", type="string", length=255, nullable=false)
-     */
-    private $nom;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="prenom", type="string", length=255, nullable=false)
-     */
-    private $prenom;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="adresse", type="string", length=255, nullable=false)
      */
     private $adresse;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Admingeneachat", mappedBy="agent", cascade={"persist", "remove"})
+     */
+    private $admingeneachat;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Agentaffagence", mappedBy="agent", cascade={"persist", "remove"})
+     */
+    private $agentaffagence;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getLogin(): ?string
-    {
-        return $this->login;
-    }
-
-    public function setLogin(string $login): self
-    {
-        $this->login = $login;
-
-        return $this;
-    }
-
-    public function getMdp(): ?string
-    {
-        return $this->mdp;
-    }
-
-    public function setMdp(string $mdp): self
-    {
-        $this->mdp = $mdp;
-
-        return $this;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
-
-    public function setPrenom(string $prenom): self
-    {
-        $this->prenom = $prenom;
-
-        return $this;
     }
 
     public function getAdresse(): ?string
@@ -123,17 +55,6 @@ class Agent implements UserInterface, \Serializable
 
         return $this;
     }
-
-    public function getUsername() {
-        return $this->login;
-    }
-
-    
-
-    public function getPassword() {
-        return $this->mdp;
-    }
-
 
     public function getRoles(){
         return ['ROLE_ADMIN'];
@@ -166,6 +87,42 @@ class Agent implements UserInterface, \Serializable
             $this->login,
             $this->mdp
         ) = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    public function getAdmingeneachat(): ?Admingeneachat
+    {
+        return $this->admingeneachat;
+    }
+
+    public function setAdmingeneachat(?Admingeneachat $admingeneachat): self
+    {
+        $this->admingeneachat = $admingeneachat;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newAgent = $admingeneachat === null ? null : $this;
+        if ($newAgent !== $admingeneachat->getAgent()) {
+            $admingeneachat->setAgent($newAgent);
+        }
+
+        return $this;
+    }
+
+    public function getAgentaffagence(): ?Agentaffagence
+    {
+        return $this->agentaffagence;
+    }
+
+    public function setAgentaffagence(?Agentaffagence $agentaffagence): self
+    {
+        $this->agentaffagence = $agentaffagence;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newAgent = $agentaffagence === null ? null : $this;
+        if ($newAgent !== $agentaffagence->getAgent()) {
+            $agentaffagence->setAgent($newAgent);
+        }
+
+        return $this;
     }
 
 }

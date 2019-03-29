@@ -1,10 +1,11 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
-    providers:
-        from_database:
+    providers:           
+        users:
             entity:
-                class: App\Entity\Agent
-                property: login
+                class: App\Entity\User
+                property: username
+        
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -27,12 +28,12 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/adminGene, roles: ROLE_ADMIN }
-         - { path: ^/agentAff, roles: ROLE_USER }
+        - { path: ^/adminGene, roles: ROLE_ADMINGENE }
+        - { path: ^/agentAff, roles: ROLE_AGENTAFF }
         # - { path: ^/profile, roles: ROLE_USER }
     
     encoders:
-        App\Entity\Agent: 
+        App\Entity\User: 
             algorithm: bcrypt
             cost: 12
     

@@ -15,9 +15,7 @@ class AgentAffController extends AbstractController{
 	 * @return \Symony\Component\HttpFoundation\Response
 	 */
 	public function index(){
-
-		
-	
+		return $this->render('agentAff/index.html.twig');
 	}
 
 
