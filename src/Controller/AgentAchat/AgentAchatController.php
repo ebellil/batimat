@@ -1,26 +1,22 @@
 <?php
 
-namespace App\Controller\AgentAff;
-
-use App\Entity\Agent;
-use App\Entity\Agentaffagence;
-
+namespace App\Controller\AgentAchat;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-class AgentAffController extends AbstractController{
+class AgentAchatController extends AbstractController{
 
 
 	/**
-	 * @Route("/agentAff/", name="agentAff.home")
+	 * @Route("/agentAchat/", name="agentAchatHome")
 	 * @return \Symony\Component\HttpFoundation\Response
 	 */
 	public function index(){
 
-		return $this->render('agentAff/index.html.twig', []);
+		return $this->render('agentAchat/index.html.twig');
 	
 	}
 
