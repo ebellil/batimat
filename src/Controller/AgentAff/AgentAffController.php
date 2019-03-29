@@ -22,6 +22,7 @@ class AgentAffController extends AbstractController{
 
 		return $this->render('agentAff/index.html.twig', []);
 	
+
 	}
 
 

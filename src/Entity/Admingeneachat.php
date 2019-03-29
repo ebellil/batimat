@@ -28,6 +28,11 @@ class Admingeneachat
      */
     private $matriculead;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Agent", inversedBy="admingeneachat", cascade={"persist", "remove"})
+     */
+    private $agent;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,5 +50,17 @@ class Admingeneachat
         return $this;
     }
 
+    public function getAgent(): ?Agent
+    {
+        return $this->agent;
+    }
+/*
+    public function setAgent(?Agent $agent): self
+    {
+        $this->agent = $agent;
+
+        return $this;
+    }
+*/
 
 }
