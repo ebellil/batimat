@@ -12,9 +12,14 @@ security:
             security: false
         main:
             anonymous: true
+            #guard:
+            #    authenticators:
+            #        - App\Security\LoginFormAuthenticator  
+                     
             logout: 
                 path: /logout
                 target: /
+            
 
             # activate different ways to authenticate
 
@@ -23,6 +28,7 @@ security:
 
             form_login: 
                 check_path: login
+
             # https://symfony.com/doc/current/security/form_login_setup.html
 
     # Easy way to control access for large sections of your site
@@ -30,6 +36,7 @@ security:
     access_control:
         - { path: ^/adminGene, roles: ROLE_ADMINGENE }
         - { path: ^/agentAff, roles: ROLE_AGENTAFF }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/profile, roles: ROLE_USER }
     
     encoders:

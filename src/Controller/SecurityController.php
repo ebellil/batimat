@@ -15,12 +15,21 @@ class SecurityController extends AbstractController{
 	public function login(AuthenticationUtils $authenticationUtils){
 		$error = $authenticationUtils->getLastAuthenticationError();
 		$lastUsername = $authenticationUtils->getLastUsername();
-		return $this->render('security/login.html.twig',[
-			'last_username' => $lastUsername,
-			'error' => $error
 
-		]);
+		if(true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMINGENE')){
+			return $this->redirectToRoute('adminGene.home');
+		}else if(true === $this->get('security.authorization_checker')->isGranted('ROLE_AGENTAFF')){
+			return $this->redirectToRoute('agentAff.home');
+		}else{
+			return $this->render('security/login.html.twig',[
+				'last_username' => $lastUsername,
+				'error' => $error
+			]);
+		}
+	
 	}
+
+	
 
 
 }
