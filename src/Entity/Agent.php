@@ -11,14 +11,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="agent")
  * @ORM\Entity(repositoryClass="App\Repository\AgentRepository")
  */
-class Agent
+class Agent extends User
 {
     /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
      */
     private $id;
 
@@ -39,10 +39,23 @@ class Agent
      */
     private $agentaffagence;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\User", mappedBy="agent", cascade={"persist", "remove"})
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
     }
+
+    public function setId(int $id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
 
     public function getAdresse(): ?string
     {
@@ -55,11 +68,7 @@ class Agent
 
         return $this;
     }
-
-    public function getRoles(){
-        return ['ROLE_ADMIN'];
-    }
-
+    
     /**
      * @return string|null
      */
@@ -120,6 +129,25 @@ class Agent
         $newAgent = $agentaffagence === null ? null : $this;
         if ($newAgent !== $agentaffagence->getAgent()) {
             $agentaffagence->setAgent($newAgent);
+        }
+
+        return $this;
+    }
+
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newAgent = $user === null ? null : $this;
+        if ($newAgent !== $user->getAgent()) {
+            $user->setAgent($newAgent);
         }
 
         return $this;

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +20,8 @@ class SecurityController extends AbstractController{
 			return $this->redirectToRoute('adminGene.home');
 		}else if(true === $this->get('security.authorization_checker')->isGranted('ROLE_AGENTAFF')){
 			return $this->redirectToRoute('agentAff.home');
+		}else if(true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
+			return $this->redirectToRoute('admin.home');	
 		}else{
 			return $this->render('security/login.html.twig',[
 				'last_username' => $lastUsername,

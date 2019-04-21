@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
+/** @Route("/adminGene") */
 class AdminGeneFournisseurController extends AbstractController{
 
 	/**
@@ -30,7 +31,7 @@ class AdminGeneFournisseurController extends AbstractController{
 
 
 	/**
-	 * @Route("/adminGene/fournisseur", name="adminGene.fournisseur.index")
+	 * @Route("/fournisseur", name="adminGene.fournisseur.index")
 	 * @return \Symony\Component\HttpFoundation\Response
 	 */
 	public function index(){
@@ -41,7 +42,7 @@ class AdminGeneFournisseurController extends AbstractController{
 	}
 
 	/**
-	 * @Route("/adminGene/fournisseur/ajouter", name="adminGene.fournisseur.new")
+	 * @Route("/fournisseur/ajouter", name="adminGene.fournisseur.new")
 	 * @return \Symony\Component\HttpFoundation\Response
 	 */
 	public function new(Request $request){
@@ -63,7 +64,7 @@ class AdminGeneFournisseurController extends AbstractController{
 	}
 
 	/**
-	 * @Route("/adminGene/fournisseur/{id}", name="adminGene.fournisseur.edit", methods="GET|POST")
+	 * @Route("/fournisseur/{id}", name="adminGene.fournisseur.edit", methods="GET|POST")
 	 * @param Fournisseur $fournisseur
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response
@@ -87,7 +88,7 @@ class AdminGeneFournisseurController extends AbstractController{
 
 	
 	/**
-	 * @Route("/adminGene/fournisseur/{id}", name="adminGene.fournisseur.delete", methods="DELETE")
+	 * @Route("/fournisseur/{id}", name="adminGene.fournisseur.delete", methods="DELETE")
 	 * @param Fournisseur $fournisseur
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse

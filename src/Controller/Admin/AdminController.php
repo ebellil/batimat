@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Admin;
 use App\Repository\AdminRepository;
@@ -9,21 +9,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
-
+/** @Route("/admin") */
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/admin", name="admin")
+     * @Route("/", name="admin.home")
      */
-    public function index(AdminRepository $repository)
-    {
-        //$repository = $this->getDoctrine()->getRepository(Admin::class);
-        $admins = $repository->findAll();
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
-            'admin' => $admins
-        ]);
-    }
+    public function index(){
+		return $this->render('admin/index.html.twig');
+	
+	}
 
     /**
      * @Route("/testTableAdmin", name="testTableAdmin")

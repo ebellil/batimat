@@ -12,12 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Admingeneachat
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     /**
+     * @var \Agent
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Agent")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id", referencedColumnName="id")
+     * })
      */
     private $id;
 
@@ -37,6 +39,14 @@ class Admingeneachat
     {
         return $this->id;
     }
+
+    public function setId(int $id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
 
     public function getMatriculead(): ?string
     {

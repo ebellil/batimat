@@ -8,7 +8,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-/** @Route("/adminGene") */
+/**
+ * @Route("/adminGene")
+ * @IsGranted("ROLE_ADMINGENE")
+ */
 class AdminGeneController extends AbstractController{
 
 
