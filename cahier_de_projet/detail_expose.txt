@@ -1,0 +1,19 @@
+20 mins exposée
+
+3 mins : presenter le prj et son contexte, organisation
+5 mins : conception, C.U, modele des classes
+7mins: techn -> techno choisies, fw
+             ->implementation, les diffs couches d'implementations mvc
+            
+5mins: 
+    demo appli
+    conclusions: difficultés ce que vous avez appris, ce que l'on pouvait ameliorer
+
+Attention:
+-timing
+-tout le monde en parle
+-ne pas lire ses notes
+-support de presentation
+    lisible
+    n° page, pied de page
+    

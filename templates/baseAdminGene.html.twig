@@ -14,7 +14,7 @@
       	<div class="navbar-fixed">
 			    <nav>
 			      <div class="nav-wrapper">
-			        <a href="{{ path('adminGene.home') }}" class="brand-logo">Logo</a>
+              <a href="{{ path('adminGene.home') }}" class="brand-logo" ><img src="../images/logo_final.png" alt="logo"></img></a>
 		          <ul class="right hide-on-med-and-down">
                 <li><a href="{{ path('adminGene.fournisseur.index') }}">Fournisseurs</a></li>
                 <li><a href="{{ path('adminGene.materiel.index') }}">Matériels</a></li>
@@ -35,4 +35,14 @@
       {% block javascripts %}{% endblock %}
 
   </body>
+
+      <footer class="page-footer">
+        
+          <div class="footer-copyright">
+            <div class="container">
+            © 2019 Copyright Text
+            
+            </div>
+          </div>
+    </footer>
 </html>

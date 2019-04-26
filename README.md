@@ -44,7 +44,7 @@ composer install
 add materialize_layout.html.twig file on vendor/symfony/twig-bridge/Ressources/views/Form
 
 ```
-cp dependances/materialize_layout.html.twig vendor/symfony/twig-bridge/Ressources/views/Form/*
+cp dependances/materialize_layout.html.twig vendor/symfony/twig-bridge/Ressources/views/Form/
 ```
 
 add materialize_pagination.html.twig file on vendor/knplabs/knp-paginator-bundle/Resources/views/Pagination/

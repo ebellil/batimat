@@ -117,7 +117,7 @@ INSERT INTO `categorie` (`id`, `Libelle`) VALUES
 CREATE TABLE `demande` (
   `NumCommande` int(11) NOT NULL,
   `DemandeEcrite` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `Date` date NOT NULL,
+  `Date` datetime NOT NULL,
   `Etat` tinyint(1) NOT NULL,
   `idMat` int(11) NOT NULL,
   `idAgentAff` int(11) NOT NULL
@@ -422,6 +422,15 @@ ALTER TABLE `materiel`
   ADD CONSTRAINT `materiel_ibfk_2` FOREIGN KEY (`idF`) REFERENCES `fournisseur` (`id`);
 COMMIT;
 
+ALTER TABLE `demande`
+  MODIFY COLUMN Date datetime DEFAULT CURRENT_TIMESTAMP NOT NULL;
+
+ALTER TABLE `demande`
+  MODIFY COLUMN `Etat` tinyint(1)  DEFAULT 0 NOT NULL;
+
+ALTER TABLE `demande`
+  ADD COLUMN `Quantite` INT NOT NULL;
+  
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

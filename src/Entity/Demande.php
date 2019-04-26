@@ -1,8 +1,12 @@
 <?php
 
 namespace App\Entity;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
+use App\Entity\Materiel;
+use App\Entity\Detaildemande;
 
 /**
  * Demande
@@ -28,12 +32,14 @@ class Demande
      */
     private $demandeecrite;
 
+
+
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="Date", type="date", nullable=false)
      */
-    private $date;
+    private $date ;
 
     /**
      * @var bool
@@ -50,12 +56,33 @@ class Demande
     private $idmat;
 
     /**
+     * @var ArrayCollection
+     * @ORM\OneToOne(targetEntity="App\Entity\Detaildemande", mappedBy="demande")
+     * @ORM\JoinColumn(name="numcommande", referencedColumnName="numcommande")
+     */
+    private $detaildemandes;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="idAgentAff", type="integer", nullable=false)
      */
     private $idagentaff;
 
+    /**
+     * @var int
+     * @ORM\Column(name="quantite", type="integer", nullable=false)
+     */
+    private $quantite;
+
+
+    public function __construct()
+    {    
+        $this->date = new \DateTime(); 
+        $this->etat=0;
+        $this->materiels = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     public function getNumcommande(): ?int
     {
         return $this->numcommande;
@@ -119,6 +146,50 @@ class Demande
         $this->idagentaff = $idagentaff;
 
         return $this;
+    }
+
+    public function getQuantite(): ?int
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(int $quantite): self
+    {
+        $this->quantite = $quantite;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Detaildemande[]
+     */
+    public function getDetaildemandes(): Collection
+    {
+        return $this->detaildemandes;
+    }
+
+    public function addDetaildemande(Detaildemande $detaildemande): self
+    {
+        if (!$this->detaildemandes->contains($detaildemande)) {
+            $this->detaildemandes[] = $detaildemande;
+        }
+        return $this;
+    }
+
+    public function removeDetaildemande(Detaildemande $detaildemande): self
+    {
+        if (!$this->detaildemandes->contains($detaildemande)) {
+            $this->detaildemandes->removeElement($detaildemande);
+        }
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function setDetaildemandes($detaildemandes)
+    {
+        $this->detaildemandes = $detaildemandes;
     }
 
 
