@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 use App\Entity\Materiel;
 use App\Entity\Detaildemande;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use \DateTime;
 
 /**
  * Demande
@@ -19,18 +21,13 @@ class Demande
     /**
      * @var int
      *
-     * @ORM\Column(name="NumCommande", type="integer", nullable=false)
+     * @ORM\Column(name="numcommande", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $numcommande;
+    private $numcommande = 0;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="DemandeEcrite", type="string", length=255, nullable=false)
-     */
-    private $demandeecrite;
+
 
 
 
@@ -48,19 +45,12 @@ class Demande
      */
     private $etat;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="idMat", type="integer", nullable=false)
-     */
-    private $idmat;
 
     /**
-     * @var ArrayCollection
-     * @ORM\OneToOne(targetEntity="App\Entity\Detaildemande", mappedBy="demande")
-     * @ORM\JoinColumn(name="numcommande", referencedColumnName="numcommande")
+     * @ORM\OneToMany(targetEntity="Detaildemande", mappedBy="emande", cascade={"persist"})
      */
-    private $detaildemandes;
+    protected $detaildemandes;
+
 
     /**
      * @var int
@@ -69,35 +59,20 @@ class Demande
      */
     private $idagentaff;
 
-    /**
-     * @var int
-     * @ORM\Column(name="quantite", type="integer", nullable=false)
-     */
-    private $quantite;
+
 
 
     public function __construct()
     {    
-        $this->date = new \DateTime(); 
+        $temp = new \DateTime(); 
+        $this->date = $temp;
         $this->etat=0;
-        $this->materiels = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->detaildemandes = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     public function getNumcommande(): ?int
     {
         return $this->numcommande;
-    }
-
-    public function getDemandeecrite(): ?string
-    {
-        return $this->demandeecrite;
-    }
-
-    public function setDemandeecrite(string $demandeecrite): self
-    {
-        $this->demandeecrite = $demandeecrite;
-
-        return $this;
     }
 
     public function getDate(): ?\DateTimeInterface
@@ -124,18 +99,6 @@ class Demande
         return $this;
     }
 
-    public function getIdmat(): ?int
-    {
-        return $this->idmat;
-    }
-
-    public function setIdmat(int $idmat): self
-    {
-        $this->idmat = $idmat;
-
-        return $this;
-    }
-
     public function getIdagentaff(): ?int
     {
         return $this->idagentaff;
@@ -148,22 +111,18 @@ class Demande
         return $this;
     }
 
-    public function getQuantite(): ?int
-    {
-        return $this->quantite;
-    }
-
-    public function setQuantite(int $quantite): self
-    {
-        $this->quantite = $quantite;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Detaildemande[]
      */
     public function getDetaildemandes(): Collection
+    {
+        return $this->detaildemandes;
+    }
+
+        /**
+     * @return Collection|Detaildemande[]
+     */
+    public function getDetaildemande(): Collection
     {
         return $this->detaildemandes;
     }
@@ -176,6 +135,15 @@ class Demande
         return $this;
     }
 
+    /*
+    public function addDetaildemandes(Detaildemande $detaildemande): self
+    {
+        if (!$this->detaildemandes->contains($detaildemande)) {
+            $this->detaildemandes[] = $detaildemande;
+        }
+        return $this;
+    }
+*/
     public function removeDetaildemande(Detaildemande $detaildemande): self
     {
         if (!$this->detaildemandes->contains($detaildemande)) {
@@ -192,5 +160,7 @@ class Demande
         $this->detaildemandes = $detaildemandes;
     }
 
-
+    public function __toString() {
+        return ' ';
+    }
 }

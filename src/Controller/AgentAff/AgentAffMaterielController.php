@@ -29,6 +29,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
+
 class AgentAffMaterielController extends AbstractController{
 
     /**
@@ -64,15 +67,38 @@ class AgentAffMaterielController extends AbstractController{
      * @param Materiel $materiel
      */
     public function new(Request $request){
+        $em = $this->getDoctrine()->getManager();
+
         $demande = new Demande();
+        //$idDemande = $demande->getNumcommande();
+        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
+        $demande->setIdagentaff($userId);
+
+        $originalDetaildemande = new ArrayCollection();
+        foreach ($demande->getDetaildemandes() as $detaild) {
+            
+            //$detaild->setNumcommande(1);
+            $orignalDetaildemande->add($detaild);
+            //$demande->getDetaildemandes()
+        }
+
         $form = $this->createForm(DemandeType::class, $demande); 
         $form->handleRequest($request);
 
-        $user = $this->get('security.token_storage')->getToken()->getUser()->getId();
 
         if($form->isSubmitted() && $form->isValid()){
+            foreach ($originalDetaildemande as $detaild) {
+                if ($demande->getDetaildemandes()->contains($detaild) === false) {
+                    $em->remove($detaild);
+                }
+            }
+
             $this->em->persist($demande);
-            $this->addFlash('success', 'La demande de matériel a bien été ajoutée'. $user );
+            $this->addFlash('success', 'La demande de matériel a bien été ajoutée');
+            $this->em->flush();
+
+  
+
             //$this->em->flush();
             return $this->redirectToRoute('agentAff.materiel.index');
         }

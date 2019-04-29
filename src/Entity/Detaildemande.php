@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Entity;
-
+use App\Entity\Demande;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Detaildemande
  *
- * @ORM\Table(name="detaildemande", indexes={@ORM\Index(name="numCommande", columns={"numCommande"})})
+ * @ORM\Table(name="detaildemande", indexes={@ORM\Index(name="numcommande", columns={"numcommande"})})
  * @ORM\Entity(repositoryClass="App\Repository\DetaildemandeRepository")
  */
 class Detaildemande
@@ -43,13 +44,48 @@ class Detaildemande
     private $idmat;
 
     /**
-     * @var int
      *
      * @ORM\Column(name="numCommande", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
-    private $numcommande;
+    //private $numcommande;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Demande", inversedBy="detaildemande")
+     * @ORM\JoinColumn(name="numcommande_id", referencedColumnName="numcommande")
+     */
+    protected $demande;
+
+
+    public function __construct()
+    {
+        $this->user = new ArrayCollection();
+    }
+
+    /**
+     * Set demande
+     *
+     * @param \App\Entity\Demande $demande
+     *
+     * @return Detaildemande
+     */
+    public function setDemande(\App\Entity\Demande $demande = null)
+    {
+        $this->demande = $demande;
+        return $this;
+    }
+    /**
+     * Get demande
+     *
+     * @return \App\Entity\Demande
+     */
+    public function getDemande()
+    {
+        return $this->demande;
+    }
+
 
     public function getQuantite(): ?int
     {
@@ -92,10 +128,24 @@ class Detaildemande
         return $this->idmat;
     }
 
+    public function setIdmat(int $idm): self
+    {
+        $this->idmat = $idm;
+
+        return $this;
+    }
+
+    /*
     public function getNumcommande(): ?int
     {
         return $this->numcommande;
     }
 
-
+    public function setNumcommande(int $nc): self
+    {
+        $this->numcommande = $nc;
+        
+        return $this;
+    }
+    */
 }
