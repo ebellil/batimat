@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,6 +37,24 @@ class Admingeneachat
      */
     private $agent;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="adminegeneral")
+     */
+    private $notes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\FournisseurRapport", mappedBy="admingeneral")
+     */
+    private $fournisseurRapports;
+
+   
+
+    public function __construct()
+    {
+        $this->notes = new ArrayCollection();
+        $this->fournisseurRapports = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -64,13 +84,68 @@ class Admingeneachat
     {
         return $this->agent;
     }
-/*
-    public function setAgent(?Agent $agent): self
+
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
     {
-        $this->agent = $agent;
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setAdminegeneral($this);
+        }
 
         return $this;
     }
-*/
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->contains($note)) {
+            $this->notes->removeElement($note);
+            // set the owning side to null (unless already changed)
+            if ($note->getAdminegeneral() === $this) {
+                $note->setAdminegeneral(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FournisseurRapport[]
+     */
+    public function getFournisseurRapports(): Collection
+    {
+        return $this->fournisseurRapports;
+    }
+
+    public function addFournisseurRapport(FournisseurRapport $fournisseurRapport): self
+    {
+        if (!$this->fournisseurRapports->contains($fournisseurRapport)) {
+            $this->fournisseurRapports[] = $fournisseurRapport;
+            $fournisseurRapport->setAdmingeneral($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFournisseurRapport(FournisseurRapport $fournisseurRapport): self
+    {
+        if ($this->fournisseurRapports->contains($fournisseurRapport)) {
+            $this->fournisseurRapports->removeElement($fournisseurRapport);
+            // set the owning side to null (unless already changed)
+            if ($fournisseurRapport->getAdmingeneral() === $this) {
+                $fournisseurRapport->setAdmingeneral(null);
+            }
+        }
+
+        return $this;
+    }
+
 
 }

@@ -1,26 +1,27 @@
 <?php
+
 namespace App\Form;
-use App\Entity\Admingeneachat;
-use App\Form\UserType;
-use App\Entity\User;
+
+use App\Entity\FournisseurRapport;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class AgentType extends UserType
+class FournisseurRapportType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
         $builder
-            ->add('adresse')
-
+            ->add('rapport',TextareaType::class)
+            
         ;
     }
+
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-        ]);
+       /* $resolver->setDefaults([
+            'data_class' => FournisseurRapport::class,
+        ]);*/
     }
 }
