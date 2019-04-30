@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le :  lun. 29 avr. 2019 à 14:41
--- Version du serveur :  5.7.17
--- Version de PHP :  7.1.3
+-- Client :  localhost:3306
+-- Généré le :  Mar 30 Avril 2019 à 17:49
+-- Version du serveur :  5.7.25-0ubuntu0.18.04.2
+-- Version de PHP :  7.2.15-0ubuntu0.18.04.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -45,7 +43,7 @@ CREATE TABLE `admingeneachat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `admingeneachat`
+-- Contenu de la table `admingeneachat`
 --
 
 INSERT INTO `admingeneachat` (`id`, `MatriculeAd`, `agent_id`) VALUES
@@ -64,7 +62,7 @@ CREATE TABLE `agent` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `agent`
+-- Contenu de la table `agent`
 --
 
 INSERT INTO `agent` (`id`, `adresse`) VALUES
@@ -96,7 +94,7 @@ CREATE TABLE `agentaffagence` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `agentaffagence`
+-- Contenu de la table `agentaffagence`
 --
 
 INSERT INTO `agentaffagence` (`id`, `MatriculeAg`, `Agence`, `VilleAgence`) VALUES
@@ -116,7 +114,7 @@ CREATE TABLE `categorie` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `categorie`
+-- Contenu de la table `categorie`
 --
 
 INSERT INTO `categorie` (`id`, `Libelle`) VALUES
@@ -132,7 +130,7 @@ INSERT INTO `categorie` (`id`, `Libelle`) VALUES
 CREATE TABLE `demande` (
   `NumCommande` int(11) NOT NULL,
   `Date` date NOT NULL,
-  `Etat` tinyint(1) NOT NULL  DEFAULT '0',
+  `Etat` tinyint(1) NOT NULL DEFAULT '0',
   `idAgentAff` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -168,7 +166,7 @@ CREATE TABLE `fournisseur` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `fournisseur`
+-- Contenu de la table `fournisseur`
 --
 
 INSERT INTO `fournisseur` (`id`, `MatriculeF`, `RaisonSociale`, `Adresse`, `Ville`, `Pays`, `note`, `rapport`) VALUES
@@ -190,7 +188,7 @@ CREATE TABLE `fournisseur_rapport` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `fournisseur_rapport`
+-- Contenu de la table `fournisseur_rapport`
 --
 
 INSERT INTO `fournisseur_rapport` (`id`, `fournisseur_id`, `rapport`, `admingeneral_id`) VALUES
@@ -213,7 +211,7 @@ CREATE TABLE `image` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `image`
+-- Contenu de la table `image`
 --
 
 INSERT INTO `image` (`id`, `materiel_id`, `image_name`, `updated_at`) VALUES
@@ -241,7 +239,7 @@ CREATE TABLE `materiel` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `materiel`
+-- Contenu de la table `materiel`
 --
 
 INSERT INTO `materiel` (`id`, `Libelle`, `Description`, `Stock`, `idCat`, `idF`) VALUES
@@ -264,7 +262,7 @@ CREATE TABLE `migration_versions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `migration_versions`
+-- Contenu de la table `migration_versions`
 --
 
 INSERT INTO `migration_versions` (`version`, `executed_at`) VALUES
@@ -299,7 +297,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `user`
+-- Contenu de la table `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `nom`, `prenom`, `roles`) VALUES
@@ -311,7 +309,7 @@ INSERT INTO `user` (`id`, `username`, `password`, `nom`, `prenom`, `roles`) VALU
 (41, 'testAdminGene1', '$2y$12$mCHaYhtRLkokEexB4ZfyIOxcOocWf3mXXrKLVoR9Q/HyXfM8w8kMi', 'testAdminGene1', 'testAdminGene1', 'ROLE_ADMINGENE');
 
 --
--- Index pour les tables déchargées
+-- Index pour les tables exportées
 --
 
 --
@@ -357,7 +355,7 @@ ALTER TABLE `demande`
 --
 ALTER TABLE `detaildemande`
   ADD PRIMARY KEY (`idMat`,`numCommande`),
-  ADD KEY `numcommande` (`numcommande`);
+  ADD KEY `numcommande` (`numCommande`);
 
 --
 -- Index pour la table `fournisseur`
@@ -411,7 +409,7 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT pour les tables déchargées
+-- AUTO_INCREMENT pour les tables exportées
 --
 
 --
@@ -428,7 +426,7 @@ ALTER TABLE `categorie`
 -- AUTO_INCREMENT pour la table `demande`
 --
 ALTER TABLE `demande`
-  MODIFY `NumCommande` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `NumCommande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `fournisseur`
 --
@@ -460,7 +458,7 @@ ALTER TABLE `note`
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
--- Contraintes pour les tables déchargées
+-- Contraintes pour les tables exportées
 --
 
 --
@@ -475,13 +473,6 @@ ALTER TABLE `admingeneachat`
 --
 ALTER TABLE `agentaffagence`
   ADD CONSTRAINT `agentaffagence_ibfk_1` FOREIGN KEY (`id`) REFERENCES `agent` (`id`) ON DELETE CASCADE;
-
---
--- Contraintes pour la table `fournisseur`
---
-ALTER TABLE `fournisseur`
-  ADD CONSTRAINT `fournisseur_ibfk_1` FOREIGN KEY (`note`) REFERENCES `note` (`id`),
-  ADD CONSTRAINT `fournisseur_ibfk_2` FOREIGN KEY (`rapport`) REFERENCES `rapport` (`id`);
 
 --
 -- Contraintes pour la table `fournisseur_rapport`
@@ -509,7 +500,6 @@ ALTER TABLE `materiel`
 ALTER TABLE `note`
   ADD CONSTRAINT `FK_CFBDFA14670C757F` FOREIGN KEY (`fournisseur_id`) REFERENCES `fournisseur` (`id`),
   ADD CONSTRAINT `FK_CFBDFA14748960DE` FOREIGN KEY (`admingeneral_id`) REFERENCES `admingeneachat` (`id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

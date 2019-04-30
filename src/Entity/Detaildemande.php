@@ -54,7 +54,7 @@ class Detaildemande
 
     /**
      * @ORM\ManyToOne(targetEntity="Demande", inversedBy="detaildemande")
-     * @ORM\JoinColumn(name="numcommande_id", referencedColumnName="numcommande")
+     * @ORM\JoinColumn(name="numcommande", referencedColumnName="numcommande")
      */
     protected $demande;
 
