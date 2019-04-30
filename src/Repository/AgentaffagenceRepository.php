@@ -19,6 +19,42 @@ class AgentaffagenceRepository extends ServiceEntityRepository
         parent::__construct($registry, Agentaffagence::class);
     }
 
+    public function updateAgentAff($id, $matricule, $agence, $villeAgence)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->update(Agentaffagence::class, 'a')
+            ->set('a.matriculeag', '?1')
+            ->set('a.agence', '?2')
+            ->set('a.villeagence', '?3')
+            ->where('a.id = ?4')
+            ->setParameter(1, $matricule)
+            ->setParameter(2, $agence)
+            ->setParameter(3, $villeAgence)
+            ->setParameter(4, $id)
+        ;
+        return $q = $qb->getQuery();
+        
+    }
+
+    public function insertAgentAff($matricule, $agence, $villeAgence)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->insert('admingeneachat')
+            ->values(
+                array(
+                    'a.matriculeag' =>'?',
+                    'a.agence' =>'?',
+                    'a.villeagence' => '?'
+                )
+            )
+            ->setParameter(1, $matricule)
+            ->setParameter(2, $agence)
+            ->setParameter(3, $villeAgence)
+        ;
+        return $q = $qb->getQuery();
+        
+    }
+
     // /**
     //  * @return Agentaffagence[] Returns an array of Agentaffagence objects
     //  */

@@ -59,29 +59,26 @@ class Fournisseur
     private $pays;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="NoteGlobale", type="string", length=255, nullable=false)
-     */
-    private $noteglobale;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="RapportEcrit", type="text", length=65535, nullable=false)
-     */
-    private $rapportecrit;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Materiel", mappedBy="fournisseur")
      */
     private $materiel;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="fournisseur")
+     */
+    private $notes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\FournisseurRapport", mappedBy="fournisseur")
+     */
+    private $fournisseurRapports;
+
 
     public function __construct()
     {
-        $this->materiels = new ArrayCollection();
         $this->materiel = new ArrayCollection();
+        $this->fournisseurRapports = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
 
@@ -150,30 +147,6 @@ class Fournisseur
         return $this;
     }
 
-    public function getNoteglobale(): ?string
-    {
-        return $this->noteglobale;
-    }
-
-    public function setNoteglobale(string $noteglobale): self
-    {
-        $this->noteglobale = $noteglobale;
-
-        return $this;
-    }
-
-    public function getRapportecrit(): ?string
-    {
-        return $this->rapportecrit;
-    }
-
-    public function setRapportecrit(string $rapportecrit): self
-    {
-        $this->rapportecrit = $rapportecrit;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Materiel[]
      */
@@ -199,6 +172,68 @@ class Fournisseur
             // set the owning side to null (unless already changed)
             if ($materiel->getFournisseur() === $this) {
                 $materiel->setFournisseur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setFournisseur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->contains($note)) {
+            $this->notes->removeElement($note);
+            // set the owning side to null (unless already changed)
+            if ($note->getFournisseur() === $this) {
+                $note->setFournisseur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FournisseurRapport[]
+     */
+    public function getFournisseurRapports(): Collection
+    {
+        return $this->fournisseurRapports;
+    }
+
+    public function addFournisseurRapport(FournisseurRapport $fournisseurRapport): self
+    {
+        if (!$this->fournisseurRapports->contains($fournisseurRapport)) {
+            $this->fournisseurRapports[] = $fournisseurRapport;
+            $fournisseurRapport->setFournisseur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFournisseurRapport(FournisseurRapport $fournisseurRapport): self
+    {
+        if ($this->fournisseurRapports->contains($fournisseurRapport)) {
+            $this->fournisseurRapports->removeElement($fournisseurRapport);
+            // set the owning side to null (unless already changed)
+            if ($fournisseurRapport->getFournisseur() === $this) {
+                $fournisseurRapport->setFournisseur(null);
             }
         }
 

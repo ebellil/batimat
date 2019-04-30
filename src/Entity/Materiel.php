@@ -36,7 +36,6 @@ class Materiel
     private $libelle;
     /**
      * @var string
-     *
      * @ORM\Column(name="Description", type="text", length=65535, nullable=false)
      */
     private $description;

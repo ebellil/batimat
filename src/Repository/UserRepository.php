@@ -19,6 +19,46 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function findAdminGeneral()
+    {
+        $value = "ROLE_ADMINGENE";
+        return $this->createQueryBuilder('user')
+            ->andWhere('user.roles = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findAgentAffile()
+    {
+        $value = "ROLE_AGENTAFF";
+        return $this->createQueryBuilder('user')
+            ->andWhere('user.roles = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function updateUser($id, $username, $password, $nom, $prenom)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->update(User::class, 'u')
+            ->set('u.username', '?1')
+            ->set('u.password', '?2')
+            ->set('u.nom', '?3')
+            ->set('u.prenom', '?4')
+            ->where('u.id = ?5')
+            ->setParameter(1, $username)
+            ->setParameter(2, $password)
+            ->setParameter(3, $nom)
+            ->setParameter(4, $prenom)
+            ->setParameter(5, $id)
+        ;
+       return $q = $qb->getQuery();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

@@ -1,0 +1,56 @@
+{% extends 'baseAdminGene.html.twig' %}
+
+{% block title 'Gérer les fournisseurs' %}
+
+{% block body %}
+	<div class="container">
+		<h1>Gérer les rapports des fournisseurs</h1>
+		
+		{% for message in app.flashes('success') %}
+			<div class="card-panel green accent-3">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+		<div>
+			<table>
+        		<thead>
+          			<tr>
+              			<th>Libellé</th>
+              			<th></th>
+						<th>Actions</th>
+						<th></th>
+          			</tr>
+        		</thead>
+        		<tbody>
+        			{% for fournisseur in fournisseurs %}
+			        <tr>
+			            <td>{{fournisseur.matriculeF}}</td>
+						<td><a href="{{ path('adminGene.fournisseur.rapport.newRapport', {id: fournisseur.id}) }}" class="waves-effect waves-light btn">Ajouter Rapport</a>
+			           		
+			            <td>
+						{% for fRapport in fournisseur.fournisseurRapports %}
+							<a href="{{ path('adminGene.fournisseur.rapport.editRapport', {id: fournisseur.id, idRapport: fRapport.id}) }}" class="waves-effect waves-light btn">Modifier rapport</a>
+			           	{% endfor %}
+						</td>
+			            <td>
+							{% for fRapport in fournisseur.fournisseurRapports %}
+			            	<form method="post" action="{{ path('adminGene.fournisseur.rapport.deleteRapport', {id: fRapport.id}) }}">
+			            		<input type="hidden" name="_method" value="DELETE">
+			            		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ fRapport.id) }}">
+			            		<button class="btn waves-effect waves-light">Supprimer</button>
+			            	</form>
+							    	{% endfor %}
+			            </td>
+					
+						
+			        </tr>
+			        {% endfor %}
+        		</tbody>
+      		</table>
+      		
+		</div>
+	</div>
+
+
+{% endblock %}

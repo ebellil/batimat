@@ -8,7 +8,7 @@
 			<div class="col s6 offset-s3 ">
 			{% if error %}
 				<div class="card-panel red darken-1">
-					{{ error.messageKey | trans(error.messagedata, 'security') }}
+					{{ error  }}
 				</div>
 			{% endif %}
 				<form action="{{ path('login') }}" method="post">
@@ -23,7 +23,7 @@
 						<input class="validate" type="password" id="password" name="_password" >
 						
 					</div>
-
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 					<button type="submit" class="btn waves-effect waves-light">Se connecter</button>
 				</form>
 			</div>

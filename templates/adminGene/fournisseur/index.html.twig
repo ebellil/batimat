@@ -17,7 +17,9 @@
         		<thead>
           			<tr>
               			<th>Libellé</th>
-              			<th>Actions</th>
+              			<th></th>
+						<th>Actions</th>
+						<th></th>
           			</tr>
         		</thead>
         		<tbody>
@@ -34,6 +36,20 @@
 			            		<button class="btn waves-effect waves-light">Supprimer</button>
 			            	</form>
 			            </td>
+					
+						<td>
+						
+							{% if fournisseur.fournisseurRapports == null %}
+						
+			            	<a href="{{ path('adminGene.fournisseur.rapport.newRapport', {id: fournisseur.id}) }}" class="waves-effect waves-light btn">Rapport</a>
+			           		{% else %}
+							   	{% for fRapport in fournisseur.fournisseurRapports %}
+							<a href="{{ path('adminGene.fournisseur.rapport.editRapport', {id: fournisseur.id, idRapport: fRapport.id}) }}" class="waves-effect waves-light btn">Modifier rapport</a>
+			           		 {% endfor %}
+							   {% endif %}
+
+					    </td>
+						
 			        </tr>
 			        {% endfor %}
         		</tbody>
