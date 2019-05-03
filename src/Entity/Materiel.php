@@ -28,7 +28,6 @@ class Materiel
      */
     private $id;
 
-    public $temp;
     /**
      * @var string
      *

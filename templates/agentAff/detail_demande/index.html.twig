@@ -1,10 +1,10 @@
-{% extends 'baseagentAff.html.twig' %}
+{% extends 'baseAgentAff.html.twig' %}
 
-{% block title 'Gérer les categories' %}
+{% block title 'Gérer les demandes' %}
 
 {% block body %}
 	<div class="container">
-		<h1>Gérer les catégories</h1>
+		<h1>Gérer les demandes</h1>
 		
 		{% for message in app.flashes('success') %}
 			<div class="card-panel green accent-3">
@@ -16,31 +16,43 @@
 			<table>
         		<thead>
           			<tr>
+					  	<th>Crée le</th>
+						<th>Etat</th>
               			<th>Libellé</th>
+						<th>Quantité</th>
               			<th>Actions</th>
           			</tr>
         		</thead>
         		<tbody>
-        			{% for categorie in categories %}
+        			{% for detail_dem in detail_demandes %}
 			        <tr>
-			            <td>{{categorie.libelle}}</td>
+						<td>{{detail_dem.demande.date|date('Y-m-d')}}</td>
+						<td>{{detail_dem.demande.etat ? 'Validé' : 'En cours'}}</td>
+			            <td>{{detail_dem.idmat}}</td>
+						<td>{{detail_dem.quantite}}</td>
+			            <!--td>
+			            	<a href="{#{ path('agentAff.detail_dem.edit', {id: detail_dem.idmat}) }#}" class="waves-effect waves-light btn">Editer</a>
+			            </td-->
 			            <td>
-			            	<a href="{{ path('adminGene.categorie.edit', {id: categorie.id}) }}" class="waves-effect waves-light btn">Editer</a>
-			            </td>
-			            <td>
-			            	<form method="post" action="{{ path('adminGene.categorie.delete', {id: categorie.id}) }}">
+			            	<form method="post" action="{#{ path('agentAff.detail_dem.delete', {id: detail_dem.idmat}) }#}">
 			            		<input type="hidden" name="_method" value="DELETE">
-			            		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ categorie.id) }}">
-			            		<button class="btn waves-effect waves-light">Supprimer</button>
+			            		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ detail_dem.idmat) }}">
+			            		<button class="btn waves-effect waves-light">Résilier</button>
 			            	</form>
 			            </td>
+						<td>
+							<a href="{#{ path('agentAff.detail_dem.edit', {id: detail_dem.idmat}) }#}" class="waves-effect waves-light btn">Noter</a>
+						</td>
+						<td>
+							<a href="{#{ path('agentAff.detail_dem.edit', {id: detail_dem.idmat}) }#}" class="waves-effect waves-light btn">Rédiger un rapport</a>
+						</td>
 			        </tr>
 			        {% endfor %}
         		</tbody>
       		</table>
-      		<div class="row">
-      			<a href="{{ path('adminGene.categorie.new') }}" class="waves-effect waves-light btn">Ajouter</a>
-      		</div>
+      		<!--div class="row">
+      			<a href="{#{ path('agentAff.materiel.commander') }#}" class="waves-effect waves-light btn">Ajouter</a>
+      		</div-->
 		</div>
 	</div>
 

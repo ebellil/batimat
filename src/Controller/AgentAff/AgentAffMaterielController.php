@@ -56,12 +56,17 @@ class AgentAffMaterielController extends AbstractController{
     }
 
 
-/*
+    /**
+	 * @Route("/agentAff/detaildemandes/index", name="agentAff.detaildemandes.view")
+	 * @return \Symony\Component\HttpFoundation\Response
+	 */
 	public function index_1(){
-        $demandes = $this->repository->findAll();
-		return $this->render('agentAff/demanderMateriel.html.twig', compact('demandes'));
+        //$detail_demandes = $this->repository->findAll();
+        $detail_demandes = $this->getDoctrine()->getRepository(Detaildemande::class)->findAll();
+
+		return $this->render('agentAff/detail_demande/index.html.twig', compact('detail_demandes'));
 	}
-*/
+
 
     /**
 	 * @Route("/agentAff/materiel/index", name="agentAff.home")
@@ -170,7 +175,6 @@ class AgentAffMaterielController extends AbstractController{
         $detail_d= new Detaildemande();
         $detail_d->setDemande($demande);
         $detail_d->setQuantite(7);
-        //$detail_d->setNumcommande($demande->getNumcommande());
         $detail_d->setIdmat($id);
         $form = $this->createForm(DetaildemandeType::class, $detail_d);
         $form->handleRequest($request);
@@ -184,6 +188,47 @@ class AgentAffMaterielController extends AbstractController{
                 //'form' => $form->createView()
             ]);
         //}
+    }
+    
+    /**
+	 * @Route("/agentAff/materiel/commander/{id}", name="agentAff.materiel.commander.edit", methods="GET|POST")
+	 * @param Materiel $materiel
+	 * @param Request $request
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+	public function edit(Materiel $materiel, Request $request){
+		$form = $this->createForm(MaterielType::class, $materiel);
+		$form->handleRequest($request);
+		if($form->isSubmitted() && $form->isValid()){
+			$this->em->flush();
+			$this->addFlash('success', 'Le matériel a bien été modifié');
+			return $this->redirectToRoute('agentAff.materiel.index');
+		}
+		return $this->render('agentAff/materiel/edit.html.twig', [
+			'materiel' => $materiel,
+			'form' => $form->createView()
+		]);
+    }
+    
+    /**
+	 * @Route("/agentAff/materiel/delete/{id}", name="agentAff.materiel.commander.delete", methods="DELETE")
+	 * @param Materiel $materiel
+	 * @param Request $request
+	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
+	 */
+	public function delete(Materiel $materiel, Request $request){
+        $Detaildemanderepository = $this->getDoctrine()->getRepository(Detaildemande::class);
+
+        $Demanderepository = $this->getDoctrine()->getRepository(Demande::class);
+
+        $detail_d = $Detaildemanderepository->findOneBy( ['idmat' => $materiel->getId()] );
+		if($this->isCsrfTokenValid('delete' . $materiel->getId(), $request->get('_token'))){
+            //cherche le détail d'une demande à partir de l'id d'un matériel
+			$this->em->remove($materiel);
+			$this->addFlash('success', 'Le matériel a bien été supprimé de la demande');
+			$this->em->flush();
+		}
+		return $this->redirectToRoute('agentAff.materiel.index');
 	}
 
 }
