@@ -25,7 +25,7 @@ class Demande
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $numcommande = 0;
+    private $numcommande ;
 
 
 

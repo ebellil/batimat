@@ -21,11 +21,11 @@ class DetaildemandeType extends AbstractType
     {
         $builder
             ->add('quantite', IntegerType::class)
-            ->add('note')
-            ->add('commentaire',TextType::class)
-            ->add('idmat')
+            //->add('note')
+            //->add('commentaire',TextType::class)
+            //->add('idmat')
             //->add('numcommande')
-            ->add('demande')
+            //->add('demande')
         ;
     }
 

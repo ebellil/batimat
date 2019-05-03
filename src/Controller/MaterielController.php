@@ -55,6 +55,6 @@ class MaterielController extends AbstractController{
 				'slug' => $materiel->getSlug() 
 			],301);
 		}
-		return $this->render('materiel/show.html.twig', ['materiel' => $materiel, 'current_menu' => 'materiels']);
+		return $this->render('agentAff/materiel/show.html.twig', ['materiel' => $materiel, 'current_menu' => 'materiels']);
 	}
 }
