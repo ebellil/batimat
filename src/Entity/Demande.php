@@ -1,8 +1,14 @@
 <?php
 
 namespace App\Entity;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
+use App\Entity\Materiel;
+use App\Entity\Detaildemande;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use \DateTime;
 
 /**
  * Demande
@@ -15,25 +21,22 @@ class Demande
     /**
      * @var int
      *
-     * @ORM\Column(name="NumCommande", type="integer", nullable=false)
+     * @ORM\Column(name="numcommande", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $numcommande;
+    private $numcommande = 0;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="DemandeEcrite", type="string", length=255, nullable=false)
-     */
-    private $demandeecrite;
+
+
+
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="Date", type="date", nullable=false)
      */
-    private $date;
+    private $date ;
 
     /**
      * @var bool
@@ -42,35 +45,46 @@ class Demande
      */
     private $etat;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="idMat", type="integer", nullable=false)
-     */
-    private $idmat;
 
     /**
+     * @ORM\OneToMany(targetEntity="Detaildemande", mappedBy="demande", cascade={"persist"})
+     */
+    protected $detaildemandes;
+
+
+    /*
      * @var int
      *
      * @ORM\Column(name="idAgentAff", type="integer", nullable=false)
-     */
-    private $idagentaff;
+    
+    private $idagentaff;*/
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Materiel", inversedBy="demandes")
+     * @ORM\JoinColumn(name="idMat", referencedColumnName="id", nullable=false)
+     */
+    private $materiel;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Agentaffagence", inversedBy="demandes")
+     * @ORM\JoinColumn(name="idAgentAff", referencedColumnName="id", nullable=false)
+     */
+    private $agent;
+
+
+
+
+    public function __construct()
+    {    
+        $temp = new \DateTime(); 
+        $this->date = $temp;
+        $this->etat=0;
+        $this->detaildemandes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     public function getNumcommande(): ?int
     {
         return $this->numcommande;
-    }
-
-    public function getDemandeecrite(): ?string
-    {
-        return $this->demandeecrite;
-    }
-
-    public function setDemandeecrite(string $demandeecrite): self
-    {
-        $this->demandeecrite = $demandeecrite;
-
-        return $this;
     }
 
     public function getDate(): ?\DateTimeInterface
@@ -97,18 +111,6 @@ class Demande
         return $this;
     }
 
-    public function getIdmat(): ?int
-    {
-        return $this->idmat;
-    }
-
-    public function setIdmat(int $idmat): self
-    {
-        $this->idmat = $idmat;
-
-        return $this;
-    }
-
     public function getIdagentaff(): ?int
     {
         return $this->idagentaff;
@@ -121,5 +123,80 @@ class Demande
         return $this;
     }
 
+    /**
+     * @return Collection|Detaildemande[]
+     */
+    public function getDetaildemandes(): Collection
+    {
+        return $this->detaildemandes;
+    }
 
+        /**
+     * @return Collection|Detaildemande[]
+     */
+    public function getDetaildemande(): Collection
+    {
+        return $this->detaildemandes;
+    }
+
+    public function addDetaildemande(Detaildemande $detaildemande): self
+    {
+        if (!$this->detaildemandes->contains($detaildemande)) {
+            $this->detaildemandes[] = $detaildemande;
+        }
+        return $this;
+    }
+
+    /*
+    public function addDetaildemandes(Detaildemande $detaildemande): self
+    {
+        if (!$this->detaildemandes->contains($detaildemande)) {
+            $this->detaildemandes[] = $detaildemande;
+        }
+        return $this;
+    }
+*/
+    public function removeDetaildemande(Detaildemande $detaildemande): self
+    {
+        if (!$this->detaildemandes->contains($detaildemande)) {
+            $this->detaildemandes->removeElement($detaildemande);
+        }
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function setDetaildemandes($detaildemandes)
+    {
+        $this->detaildemandes = $detaildemandes;
+    }
+
+    public function __toString() {
+        return ' ';
+    }
+
+    public function getMateriel(): ?Materiel
+    {
+        return $this->materiel;
+    }
+
+    public function setMateriel(?Materiel $materiel): self
+    {
+        $this->materiel = $materiel;
+
+        return $this;
+    }
+
+    public function getAgent(): ?Agentaffagence
+    {
+        return $this->agent;
+    }
+
+    public function setAgent(?Agentaffagence $agent): self
+    {
+        $this->agent = $agent;
+
+        return $this;
+    }
 }

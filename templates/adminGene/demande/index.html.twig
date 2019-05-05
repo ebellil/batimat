@@ -1,0 +1,70 @@
+{% extends 'baseAdminGene.html.twig' %}
+
+{% block title 'Gestion des demandes' %}
+
+{% block body %}
+	<div class="container">
+		<h3>Gestion des demandes</h3>
+		{% if error %}
+			<div class="card-panel red darken-1">
+				{{ error }}
+			</div>
+		{% endif %}
+			<table>
+        		<thead>
+          			<tr>
+						<th>NumCommande</th>
+						<th>Agence</th>
+              			<th>Agent</th>
+						<th>Produit</th>
+						<th>Stock produit</th>
+						<th>Quantité</th>
+						<th>État</th>
+						<th>Valider</th>
+          			</tr>
+        		</thead>
+        		<tbody>
+        			{% for demande in demandes %}
+								{% for agentaff in agentaffs %}
+								{% if demande.agent.id == agentaff.id %}
+			        <tr>
+			         	
+									<td>{{demande.numCommande}}</td>
+									<td>{{agentaff.agence}}</td>
+									<td>{{agentaff.matriculeag}}</td>
+									<td>{{demande.materiel.libelle}}</td>
+									<td>{{demande.materiel.stock}}</td>
+									   <td>{{ demande.detaildemandes[0].quantite }}</td>
+                        <td>
+                        {% if demande.etat == false %}
+                          Non  Validé
+                         {% else  %}
+                         Validé
+                         {% endif %}
+												 </td>
+												 <td>
+												 {% if demande.etat == false %}
+												<form method="post" action="{{ path('adminGene.demande.validation', {id: demande.numCommande}) }}">
+													<input type="hidden" name="_method" value="VALIDATE">
+													<input type="hidden" name="_token" value="{{ csrf_token('validate' ~ demande.numCommande) }}">
+													<button class="btn waves-effect waves-light">Valider</button>
+												</form>
+										{% else %}
+												<a class="btn disabled">Valider</a>
+										{% endif %}
+										</td>
+
+			        </tr>
+							{% endif %}
+							 {% endfor %}
+			        {% endfor %}
+        		</tbody>
+      		</table>
+      		
+		<div class="center-align">
+    		{{ knp_pagination_render(demandes) }}
+		</div>
+	</div>
+
+
+{% endblock %}

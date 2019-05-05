@@ -19,6 +19,21 @@ class AgentRepository extends ServiceEntityRepository
         parent::__construct($registry, Agent::class);
     }
 
+    public function updateAgent($id, $adresse)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->update(Agent::class, 'a')
+            ->set('a.adresse', '?1')
+            ->where('a.id = ?2')
+            ->setParameter(1, $adresse)
+            ->setParameter(2, $id)
+        ;
+        return $q = $qb->getQuery();
+    }
+
+
+    
+
     // /**
     //  * @return Agent[] Returns an array of Agent objects
     //  */

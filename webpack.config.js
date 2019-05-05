@@ -18,9 +18,13 @@ Encore
      * and one CSS file (e.g. app.css) if you JavaScript imports CSS.
      */
     .addEntry('js/materialize', './assets/js/bin/materialize.js')
-    .addEntry('js/materialize.min', './assets/js/bin/materialize.min.js')
-    .addEntry('js/jquery-3.3.1.min', './assets/js/bin/jquery-3.3.1.min.js')
-    .addStyleEntry('css/materialize', './assets/css/sass/materialize.scss')
+    //.addEntry('js/materialize.min', './assets/js/bin/materialize.min.js')
+    //.addEntry('js/materialize/jquery-3.3.1.min', './assets/js/bin/jquery-3.3.1.min.js')
+
+    
+
+    //.addStyleEntry('css/materialize', './assets/css/sass/materialize.scss')
+    //.addStyleEntry('css/datepicker', './assets/css/sass/components/datepicker.scss')
     //.addEntry('page2', './assets/js/page2.js')
 
     // will require an extra script tag for runtime.js

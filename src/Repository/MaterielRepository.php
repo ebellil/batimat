@@ -27,6 +27,19 @@ class MaterielRepository extends ServiceEntityRepository
         ;
     }
 
+    public function enleverQte($id, $qte)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->update(Materiel::class, 'm')
+                ->set('m.stock', '?1')
+                ->where('m.id = ?2')
+                ->setParameter(1, $qte)
+                ->setParameter(2, $id)
+              
+            ;
+            return $q = $qb->getQuery();
+    }
+
     // /**
     //  * @return Materiel[] Returns an array of Materiel objects
     //  */

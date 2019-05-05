@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="icon" type="image/png" href="{{ asset('images/logo_final.png') }}" />
+        <title>{% block title %}{% endblock %}</title>
+        {% block stylesheets %} 
+        <link href="{{ asset('build/css/materialize.min.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('build/css/style.css') }}" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  			{% endblock %}
+    </head>
+     <main>
+    <body>	
+    	<header>
+      	<div class="navbar-fixed">
+			    <nav>
+			       <div class="nav-wrapper">
+              <a href="{{ path('admin.home') }}" class="brand-logo" >
+                <img src="{{ asset('images/logo_final.png') }}"  alt="logo"></img>
+              </a>     
+              <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+		          <ul class="right hide-on-med-and-down">
+                <li><a href="{{ path('admin.adminGeneral.index') }}">Administrateur général</a></li>
+                <li><a href="{{ path('admin.agentAffile.index') }}">Agent affilé</a></li> 
+                {% if app.user %}
+                <li><a href="{{ path('logout') }}">Se déconnecter</a></li>
+                {% endif %}          
+              </ul>
+            </div>
+				  </nav>
+ 				</div>
+
+        <ul id="slide-out" class="sidenav">
+          <li><a href="{{ path('admin.adminGeneral.index') }}">Administrateur général</a></li>
+                <li><a href="{{ path('admin.agentAffile.index') }}">Agent affilé</a></li> 
+                {% if app.user %}
+                <li><a href="{{ path('logout') }}">Se déconnecter</a></li>
+                {% endif %}  
+        </ul>
+        
+      </header>
+      {% block body %}{% endblock %}
+ <!--<script src="{{asset('build/js/jquery-3.3.1.min.js')}}"></script>-->
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script>
+            $(document).ready(function(){
+              $('.sidenav').sidenav();
+            });
+        </script>
+      {% block javascripts %}{% endblock %}
+
+  </body>
+   </main>
+</html>

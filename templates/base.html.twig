@@ -3,7 +3,10 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Batimat{% endblock %}</title>
+        <link rel="icon" type="image/png" href="{{ asset('images/logo_final.png') }}" />
+        <title>
+          {% block title %}Batimat{% endblock %}
+        </title>
         {% block stylesheets %} 
         <link href="{{ asset('build/css/materialize.min.css') }}" rel="stylesheet"/>
           <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -14,16 +17,18 @@
         		  <div class="navbar-fixed">
 				    <nav>
 				      <div class="nav-wrapper">
-				        <a href="{{ path('home') }}" class="brand-logo">Logo</a>
+				        <a href="#" >
+                  <img src="{{ asset('images/logo_final.png') }}"  alt="logo"></img>
+                </a>   
 				        <ul class="right hide-on-med-and-down">
                  
                
                
          
-				          <li><a href="{{ path('materiel.index') }}">Matériels</a></li>
+				          <!--<li><a href="{{ path('materiel.index') }}">Matériels</a></li>
                  {% if app.user %}
 				          <li><a href="{{ path('logout') }}">Se déconnecter</a></li>
-				        {% endif %}
+				        {% endif %}-->
                 </ul>
                
 				      </div>

@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
+/** 
+ * User
+ * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface, \Serializable
@@ -31,17 +34,7 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=255)
      */
     private $roles;
-
-    /*
-     * @ORM\OneToOne(targetEntity="App\Entity\Agent", cascade={"persist", "remove"})
-    
-    private $agent;
-
-    /*
-     * @ORM\OneToOne(targetEntity="App\Entity\Admin", cascade={"persist", "remove"})
-     
-    private $admin;
- */
+ 
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -52,6 +45,16 @@ class User implements UserInterface, \Serializable
      */
     private $prenom;
 
+    /*
+     * @ORM\OneToOne(targetEntity="App\Entity\Admin", inversedBy="user", cascade={"persist", "remove"})
+     
+    private $admin;
+
+    /*
+     * @ORM\OneToOne(targetEntity="App\Entity\Agent", inversedBy="user", cascade={"persist", "remove"})
+     
+    private $agent;
+*/
     public function getId(): ?int
     {
         return $this->id;
@@ -119,13 +122,13 @@ class User implements UserInterface, \Serializable
         ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 
-    public function getRoles(): ?array
+    public function getRoles()
     {
         
         return [$this->roles];
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(string $roles): self
     {
         $this->roles = $roles;
 
@@ -179,4 +182,5 @@ class User implements UserInterface, \Serializable
 
         return $this;
     }
+
 }

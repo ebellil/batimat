@@ -1,0 +1,52 @@
+{% extends 'baseAdminGene.html.twig' %}
+
+{% block title 'Gérer les fournisseurs' %}
+
+{% block body %}
+	<div class="container">
+		<h1>Gérer les rapports des fournisseurs</h1>
+		
+		{% for message in app.flashes('success') %}
+			<div class="card-panel green accent-3">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+		<div>
+			<table>
+        		<thead>
+          			<tr>
+              			<th>Libellé</th>
+              			
+						<th></th>
+						<th>Actions</th>
+							<th></th>
+          			</tr>
+        		</thead>
+        		<tbody>
+        			{% for rapport in fournisseursRapport %}
+			        <tr>
+			            <td>{{rapport.fournisseur.matriculeF}}</td>	
+						<td></td>
+			            <td>
+							<a href="{{ path('adminGene.fournisseur.rapport.editRapport', {id: rapport.fournisseur.id, idRapport: rapport.id}) }}" class="waves-effect waves-light btn">Modifier rapport</a>
+						</td>
+			            <td>
+			            	<form method="post" action="{{ path('adminGene.fournisseur.rapport.deleteRapport', {id: rapport.id}) }}">
+			            		<input type="hidden" name="_method" value="DELETE">
+			            		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ rapport.id) }}">
+			            		<button class="btn waves-effect waves-light">Supprimer</button>
+			            	</form>
+			            </td>
+			        </tr>
+			        {% endfor %}
+        		</tbody>
+      		</table>
+			  <td><a href="{{ path('adminGene.fournisseur.rapport.newRapport') }}" class="waves-effect waves-light btn">Ajouter Rapport</a>
+			           	
+      		
+		</div>
+	</div>
+
+
+{% endblock %}

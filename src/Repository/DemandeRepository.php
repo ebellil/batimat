@@ -19,6 +19,19 @@ class DemandeRepository extends ServiceEntityRepository
         parent::__construct($registry, Demande::class);
     }
 
+    public function validation($numCommande)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->update(Demande::class, 'd')
+                ->set('d.etat', '?1')
+                ->where('d.numcommande = ?2')
+                ->setParameter(1, 1)
+                ->setParameter(2, $numCommande)
+              
+            ;
+            return $q = $qb->getQuery();
+    }
+
     // /**
     //  * @return Demande[] Returns an array of Demande objects
     //  */
