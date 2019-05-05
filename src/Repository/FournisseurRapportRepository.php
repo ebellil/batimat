@@ -19,6 +19,17 @@ class FournisseurRapportRepository extends ServiceEntityRepository
         parent::__construct($registry, FournisseurRapport::class);
     }
 
+    public function findByUser($idU)
+    {
+      
+        return $this->createQueryBuilder('fournisseurrapport')
+            ->andWhere('fournisseurrapport.admingeneral = :idU')
+            ->setParameter('idU', $idU)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function findByFandU($idF, $idU)
     {
       

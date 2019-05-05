@@ -2,13 +2,16 @@
 
 namespace App\Controller\AdminGene;
 use App\Entity\Fournisseur;
+use App\Entity\Note;
 use App\Entity\FournisseurRapport;
 use App\Form\FournisseurType;
 use App\Form\FournisseurRapportType;
+use App\Form\NoteType;
 use App\Repository\FournisseurRepository;
 use App\Repository\FournisseurRapportRepository;
 use App\Repository\AdmingeneachatRepository;
 use App\Repository\AgentRepository;
+use App\Repository\NoteRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,24 +40,30 @@ class AdminGeneFournisseurController extends AbstractController{
 	 */
 	private $repositoryAdminGene;
 
-	
+	/**
+	 *@var NoteRepository
+	 */
+	private $repositoryNote;
 
 	/**
 	 *@var ObjectManager
 	 */
 	private $em;
 
+	
+	
+
 	public function __construct(FournisseurRepository $repository, 
 		FournisseurRapportRepository $repositoryFournisseurRapport, 
 		AdmingeneachatRepository $repositoryAdminGene, 
 		AgentRepository $repositoryAgent,
+		NoteRepository $repositoryNote,
 		ObjectManager $em){
-
 		$this->repository = $repository;
 		$this->repositoryFournisseurRapport = $repositoryFournisseurRapport;
 		$this->repositoryAgent= $repositoryAgent;
 		$this->repositoryAdminGene = $repositoryAdminGene;
-
+		$this->repositoryNote = $repositoryNote;
 		$this->em = $em;
 	}
 
@@ -138,39 +147,44 @@ class AdminGeneFournisseurController extends AbstractController{
 	 */
 	public function indexRapport(){
 
-		$fournisseurs = $this->repository->findAll();
-		return $this->render('adminGene/fournisseur/rapport/index.html.twig', compact('fournisseurs'));
+		$fournisseursRapport = $this->repositoryFournisseurRapport->findByUser($this->getUser()->getId());
+		return $this->render('adminGene/fournisseur/rapport/index.html.twig', compact('fournisseursRapport'));
 	
 	}
 
 	/**
-	 * @Route("/fournisseur/rapport/ajouter/{id}", name="adminGene.fournisseur.rapport.newRapport")
-	 * @param Fournisseur $fournisseur
+	 * @Route("/fournisseur/rapport/ajouter", name="adminGene.fournisseur.rapport.newRapport")
 	 * @param Request $request
 	 * @return \Symony\Component\HttpFoundation\Response
 	 */
-	public function newRapport(Fournisseur $fournisseur, Request $request){
+	public function newRapport(Request $request){
+		$error=null;
 		$fournisseurRapport = new FournisseurRapport();
 		$form = $this->createForm(FournisseurRapportType::class, $fournisseurRapport);
 		$form->handleRequest($request);
-		
+		$adminGeneral = $this->repositoryAdminGene->find($this->getUser()->getId());
+		$fournisseur = $form->get('fournisseur')->getData();
 		if($form->isSubmitted() && $form->isValid()){
-
-		
-			$sql ='INSERT INTO fournisseur_rapport (`fournisseur_id`, `rapport`, `admingeneral_id`) 
+			$fournisseurRapport->setAdmingeneral($adminGeneral);
+			$fournisseurExiste = $this->repositoryFournisseurRapport->findByFandU($fournisseur->getId(),$this->getUser()->getId());
+			if($fournisseurExiste == null){
+				$sql ='INSERT INTO fournisseur_rapport (`fournisseur_id`, `rapport`, `admingeneral_id`) 
 				VALUES ("'.$fournisseur->getId().'", 
 						"'.$form->get('rapport')->getData().'", 
 						"'. $this->getUser()->getId().'")';
-			$connection = $this->em->getConnection();
-			$connection->executeUpdate($sql, array());
-			$this->addFlash('success', 'Le rapport a bien été ajouté');
-			
-			return $this->redirectToRoute('adminGene.fournisseur.rapport.indexRapport');
+				$connection = $this->em->getConnection();
+				$connection->executeUpdate($sql, array());
+				$this->addFlash('success', 'Le rapport a bien été ajouté');
+				return $this->redirectToRoute('adminGene.fournisseur.rapport.indexRapport');
+	
+			}else{
+				$error="Un rapport a déjà été saisie pour ce fournisseur";
+			}
 		}
-
 		return $this->render('adminGene/fournisseur/rapport/newRapport.html.twig', [
 			'fournisseurRapport' => $fournisseurRapport,
-			'form' => $form->createView()
+			'form' => $form->createView(),
+			'error' => $error
 		]);
 	}
 
@@ -213,5 +227,49 @@ class AdminGeneFournisseurController extends AbstractController{
 		}
 		return $this->redirectToRoute('adminGene.fournisseur.rapport.indexRapport');
 	}
+
+
+
+
+	/**
+	 * @Route("/fournisseur/notation/index", name="adminGene.fournisseur.notation.index")
+	 * @return \Symony\Component\HttpFoundation\Response
+	 */
+	public function indexNotation(){
+		$fournisseurs = $this->repository->findAll();
+		
+		return $this->render('adminGene/fournisseur/notation/index.html.twig', compact('fournisseurs', 'notes'));
+	
+	}
+
+	/**
+	 * @Route("/fournisseur/notation/index/{id}", name="adminGene.fournisseur.notation.noteFournisseur")
+	 *  @param Fournisseur $fournisseur
+	 * @param Request $request
+	 * @return \Symony\Component\HttpFoundation\Response
+	 */
+	public function noterFournisseur(Fournisseur $fournisseur, Request $request){
+	
+		if($this->isCsrfTokenValid('note' . $fournisseur->getId(), $request->get('_token'))){
+			$test = $request->get('test');
+			if(!$this->repositoryNote->findByFandU($fournisseur->getId(), $this->getUser()->getId())){		
+			$sql ='INSERT INTO note (`fournisseur_id`, `admingeneral_id`, `note`) 
+				VALUES ("'.$fournisseur->getId().'", 
+						"'.$this->getUser()->getId().'", 
+						"'.$test.'")';
+				$connection = $this->em->getConnection();
+				$connection->executeUpdate($sql, array());
+			}else{
+				$qUpdateNote = $this->repositoryNote->updateNote($fournisseur->getId(), $this->getUser()->getId(), $test);
+				$qUpdateNote->execute();	
+			}
+	
+			$this->addFlash('success', 'Note ajouté');
+			return $this->redirectToRoute('adminGene.fournisseur.notation.index');
+		}
+		$fournisseurs = $this->repository->findAll();
+		return $this->render('adminGene/fournisseur/notation/index.html.twig', compact('fournisseurs'));
+	}
+
 
 }

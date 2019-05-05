@@ -29,7 +29,7 @@ class Note
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Admingeneachat", inversedBy="notes")
      */
-    private $adminegeneral;
+    private $admingeneral;
 
 
     public function getId(): ?int

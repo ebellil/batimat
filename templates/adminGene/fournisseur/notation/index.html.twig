@@ -1,0 +1,73 @@
+{% extends 'baseAdminGene.html.twig' %}
+
+{% block title 'Noter les fournisseurs' %}
+
+{% block body %}
+	<div class="container">
+		<h1>Noter les fournisseurs</h1>
+		
+		{% for message in app.flashes('success') %}
+			<div class="card-panel green accent-3">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+		<div>
+			<table>
+        		<thead>
+          			<tr>
+              			<th>Libellé</th>
+						<th>Note</th>
+						<th>Actions</th>
+		
+          			</tr>
+        		</thead>
+        		<tbody>
+        			{% for fournisseur in fournisseurs %}
+			        <tr>
+			            <td>{{fournisseur.matriculeF}}</td>
+									<td>
+										
+										{% set moyenne = 0.0 %}
+										{% for noteTest in fournisseur.notes %}
+											{% set moyenne = moyenne + noteTest.note %}
+										{% endfor %}
+										{% set test = moyenne / fournisseur.notes|length %}
+									
+									{{  test }}/5
+									
+									</td>
+			            <td>
+				
+			            	<form method="post" action="{{ path('adminGene.fournisseur.notation.noteFournisseur', {id: fournisseur.id}) }}">
+			            		<input type="hidden" name="_method" value="NOTE">
+			            		<input type="hidden" name="_token" value="{{ csrf_token('note' ~ fournisseur.id) }}">
+											 <div class="input-field col l3 m3 s12">
+											 <select name="test">
+											 {% for i in 1..5 %}
+               						<option value="{{ i }}">{{ i}}</option>
+												{% endfor %}
+											</select>
+											</div>
+			            		<button class="btn waves-effect waves-light">Noter</button>
+			            	</form>
+			            </td>
+			        </tr>
+			        {% endfor %}
+        		</tbody>
+      		</table>
+      	
+		</div>
+	</div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+   
+     <script type="text/javascript"> 
+   $(document).ready(function(){
+    $('select').formSelect();
+  });
+    </script>
+{% endblock %}

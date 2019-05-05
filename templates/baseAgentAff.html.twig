@@ -3,22 +3,14 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <link rel="icon" type="image/png" href="{{ asset('images/logo_final.png') }}" />
         <title>{% block title %}{% endblock %}</title>
-        <style>
-         body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
-
-  main {
-    flex: 1 0 auto;
-  }
-  
-        </style>
+     
 
        <link href="{{ asset('build/css/materialize.min.css') }}" rel="stylesheet"/>
-          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+          
+        <link href="{{ asset('build/css/style.css') }}" rel="stylesheet"/>
         {% block stylesheets %} 
   			{% endblock %}
     </head>
@@ -26,14 +18,10 @@
     	<header>
       	<div class="navbar-fixed">
 			    <nav>
-			      <div class="nav-wrapper">
-<<<<<<< HEAD
-			        <a href="{{ path('adminGene.home') }}" class="brand-logo" ><img src="/images/logo_final.png" alt="logo"></img></a>
-   <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-        
-=======
-			        <a href="{{ path('agentAff.home') }}" class="brand-logo">Logo</a>
->>>>>>> a39a200ae2973683b2798b171dc12914ad856e02
+			      <div class="nav-wrapper"> <div class="nav-wrapper">
+              <a href="{{ path('agentAff.home') }}" class="brand-logo" >
+                <img src="{{ asset('images/logo_final.png') }}"  alt="logo"></img>
+              </a>
 		          <ul class="right hide-on-med-and-down">
                 <li>
                   <a class='dropdown-trigger ' href="#" data-target='dropdown1'>Matériels<i class="material-icons right">arrow_drop_down</i>

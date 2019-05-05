@@ -73,6 +73,11 @@ class Fournisseur
      */
     private $fournisseurRapports;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $noteglobale;
+
 
     public function __construct()
     {
@@ -236,6 +241,18 @@ class Fournisseur
                 $fournisseurRapport->setFournisseur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNoteglobale(): ?float
+    {
+        return $this->noteglobale;
+    }
+
+    public function setNoteglobale(float $noteglobale): self
+    {
+        $this->noteglobale = $noteglobale;
 
         return $this;
     }

@@ -47,17 +47,29 @@ class Demande
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Detaildemande", mappedBy="emande", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Detaildemande", mappedBy="demande", cascade={"persist"})
      */
     protected $detaildemandes;
 
 
-    /**
+    /*
      * @var int
      *
      * @ORM\Column(name="idAgentAff", type="integer", nullable=false)
+    
+    private $idagentaff;*/
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Materiel", inversedBy="demandes")
+     * @ORM\JoinColumn(name="idMat", referencedColumnName="id", nullable=false)
      */
-    private $idagentaff;
+    private $materiel;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Agentaffagence", inversedBy="demandes")
+     * @ORM\JoinColumn(name="idAgentAff", referencedColumnName="id", nullable=false)
+     */
+    private $agent;
 
 
 
@@ -162,5 +174,29 @@ class Demande
 
     public function __toString() {
         return ' ';
+    }
+
+    public function getMateriel(): ?Materiel
+    {
+        return $this->materiel;
+    }
+
+    public function setMateriel(?Materiel $materiel): self
+    {
+        $this->materiel = $materiel;
+
+        return $this;
+    }
+
+    public function getAgent(): ?Agentaffagence
+    {
+        return $this->agent;
+    }
+
+    public function setAgent(?Agentaffagence $agent): self
+    {
+        $this->agent = $agent;
+
+        return $this;
     }
 }
