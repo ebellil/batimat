@@ -9,6 +9,7 @@ use App\Entity\Demande;
 use App\Entity\Materiel;
 use App\Entity\Detaildemande;
 use App\Entity\Image;
+use App\Entity\Fournisseur;
 
 use App\Form\CategorieType;
 use App\Form\FournisseurType;
@@ -25,6 +26,7 @@ use App\Repository\DetaildemandeRepository;
 use App\Repository\FournisseurRepository;
 use App\Repository\ImageRepository;
 use App\Repository\MaterielRepository;
+
 
 
 use Doctrine\Common\Persistence\ObjectManager;
@@ -156,7 +158,6 @@ class AgentAffMaterielController extends AbstractController{
 
     /**
 	 * @Route("/agentAff/materiel/commander/{id}", name="agentAff.materiel.commander", methods="GET|POST")
-     * @return \Symony\Component\HttpFoundation\Response
 	 */
 	public function commander(int $id, Request $request){
 		$em = $this->getDoctrine()->getManager();
@@ -173,8 +174,12 @@ class AgentAffMaterielController extends AbstractController{
         //ajout de détail demande
         $em = $this->getDoctrine()->getManager();
         $detail_d= new Detaildemande();
-        $detail_d->setDemande($demande);
-        $detail_d->setQuantite(7);
+		$detail_d->setDemande($demande);
+		dump($request);
+		//dump($request->request->get('quantity'));
+        //$detail_d->setQuantite($request->request->get('quantity'));
+
+		$detail_d->setQuantite(9);
         $detail_d->setIdmat($id);
         $form = $this->createForm(DetaildemandeType::class, $detail_d);
         $form->handleRequest($request);
@@ -229,6 +234,39 @@ class AgentAffMaterielController extends AbstractController{
 			$this->em->flush();
 		}
 		return $this->redirectToRoute('agentAff.materiel.index');
+    }
+    
+
+    	/**
+	 * @Route("/fournisseur/rapport/ajouter/{id}", name="adminGene.fournisseur.rapport.newRapport")
+	 * @param Fournisseur $fournisseur
+	 * @param Request $request
+	 * @return \Symony\Component\HttpFoundation\Response
+	 */
+	public function newRapport(Fournisseur $fournisseur, Request $request){
+		$fournisseurRapport = new FournisseurRapport();
+		$form = $this->createForm(FournisseurRapportType::class, $fournisseurRapport);
+		$form->handleRequest($request);
+		//DetaildemanderapportType
+		if($form->isSubmitted() && $form->isValid()){
+
+		
+			$sql ='INSERT INTO fournisseur_rapport (`fournisseur_id`, `rapport`, `admingeneral_id`) 
+				VALUES ("'.$fournisseur->getId().'", 
+						"'.$form->get('rapport')->getData().'", 
+						"'. $this->getUser()->getId().'")';
+			$connection = $this->em->getConnection();
+			$connection->executeUpdate($sql, array());
+			$this->addFlash('success', 'Le rapport a bien été ajouté');
+			
+			return $this->redirectToRoute('adminGene.fournisseur.rapport.indexRapport');
+		}
+
+		return $this->render('adminGene/fournisseur/rapport/newRapport.html.twig', [
+			'fournisseurRapport' => $fournisseurRapport,
+			'form' => $form->createView()
+		]);
 	}
+
 
 }

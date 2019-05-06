@@ -27,7 +27,7 @@
       	<div class="navbar-fixed">
 			    <nav>
 			      <div class="nav-wrapper">
-			        <a href="{{ path('adminGene.home') }}" class="brand-logo" ><img src="/images/logo_final.png" alt="logo"></img></a>
+			        <a href="{{ path('agentAff.home') }}" class="brand-logo" ><img src="/images/logo_final.png" alt="logo"></img></a>
    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         
 			        <!--a href="{{ path('agentAff.home') }}" class="brand-logo">Logo</a-->
@@ -51,6 +51,8 @@
                 <ul id='dropdown2' class='dropdown-content'>
                   <li><a href="#!">Visualiser</a></li>
                 </ul>
+
+                <li><a class='dropdown-trigger ' href="#" data-target='dropdown2'>Fournisseurs</a></li> 
                 {% if app.user %}
                 <li><a href="{{ path('logout') }}">Se déconnecter</a></li>
                 {% endif %}          

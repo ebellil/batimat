@@ -38,16 +38,28 @@
 		<p>{{materiel.description}}</p>
 
 		<h5>En stock {{materiel.stock}}</h5>
-		<div class="row">
-			<div class="input-field col s3">
-	        	<input name="quantity" type="number"  class="validate">
-	        	<label for="quantity">Quantité</label>
-				{#{ include('agentAff/form/_form.html.twig', {button: 'Quantité'}) }#}
+			<div class="row"> 
+					<div class="input-field col s3">
 
-	        </div>
-			  	<div class="container">
-			<a href="{{ path('agentAff.materiel.commander', {id: materiel.id }) }}" class="waves-effect waves-light btn-large">Commander</a>
-		</div>
+						<input name="quantity" type="number"  class="validate">
+
+									
+
+						<label for="quantity9">Quantité</label>
+						{#{ include('agentAff/form/_form.html.twig', {button: 'Quantité'}) }#}
+					</div>
+					<div class="container">
+						<a href="{{ path('agentAff.materiel.commander', {id: materiel.id }) }}" class="waves-effect waves-light btn-large">Commander</a>
+					</div>
+			</div>
+
+							<form action="" method="post">
+									<input name="intest" type="number" placeholder="saisir nombre" >
+									<textarea name="content" placeholder="contenu"></textarea>
+									<button type="submit" >Enregistrer</button>
+							</form>
+
+
 	</div>
 
 
