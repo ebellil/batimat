@@ -55,7 +55,7 @@ class Admingeneachat
         $this->fournisseurRapports = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
@@ -143,6 +143,13 @@ class Admingeneachat
                 $fournisseurRapport->setAdmingeneral(null);
             }
         }
+
+        return $this;
+    }
+
+    public function setAgent(?Agent $agent): self
+    {
+        $this->agent = $agent;
 
         return $this;
     }

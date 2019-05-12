@@ -19,6 +19,21 @@ class FournisseurRepository extends ServiceEntityRepository
         parent::__construct($registry, Fournisseur::class);
     }
 
+    public function updateFournisseurNote($id, $note)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->update(Fournisseur::class, 'f')
+            ->set('f.noteglobale', '?1')
+            ->where('f.id = ?2')
+            ->setParameter(1, $note)
+            ->setParameter(2, $id)
+        ;
+       return $q = $qb->getQuery();
+    }
+
+    
+  
+
     // /**
     //  * @return Fournisseur[] Returns an array of Fournisseur objects
     //  */

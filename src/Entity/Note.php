@@ -29,7 +29,7 @@ class Note
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Admingeneachat", inversedBy="notes")
      */
-    private $adminegeneral;
+    private $admingeneral;
 
 
     public function getId(): ?int
@@ -69,6 +69,18 @@ class Note
     public function setAdminegeneral(?Admingeneachat $adminegeneral): self
     {
         $this->adminegeneral = $adminegeneral;
+
+        return $this;
+    }
+
+    public function getAdmingeneral(): ?Admingeneachat
+    {
+        return $this->admingeneral;
+    }
+
+    public function setAdmingeneral(?Admingeneachat $admingeneral): self
+    {
+        $this->admingeneral = $admingeneral;
 
         return $this;
     }

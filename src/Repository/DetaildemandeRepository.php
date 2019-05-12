@@ -19,6 +19,19 @@ class DetaildemandeRepository extends ServiceEntityRepository
         parent::__construct($registry, Detaildemande::class);
     }
 
+    public function findByNumCommande($numCommande)
+    {
+      
+        return $this->createQueryBuilder('detaildemande')
+            ->andWhere('detaildemande.demande = :numCommande')
+            ->setParameter('numCommande', $numCommande)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    
+
     // /**
     //  * @return Detaildemande[] Returns an array of Detaildemande objects
     //  */

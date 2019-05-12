@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,6 +39,7 @@ class Agentaffagence
      * @var \Agent
      *
      * @ORM\Id
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Agent")
      * @ORM\JoinColumns({
@@ -47,8 +50,19 @@ class Agentaffagence
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Agent", inversedBy="agentaffagence", cascade={"persist", "remove"})
+     *@ORM\JoinColumn(name="id", referencedColumnName="id")
      */
     private $agent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Demande", mappedBy="agent")
+     */
+    private $demandes;
+
+    public function __construct()
+    {
+        $this->demandes = new ArrayCollection();
+    }
 
     public function getMatriculeag(): ?string
     {
@@ -86,7 +100,7 @@ class Agentaffagence
         return $this;
     }
 
-    public function getId(): ?Agent
+    public function getId()
     {
         return $this->id;
     }
@@ -101,6 +115,44 @@ class Agentaffagence
     public function getAgent(): ?Agent
     {
         return $this->agent;
+    }
+
+    /**
+     * @return Collection|Demande[]
+     */
+    public function getDemandes(): Collection
+    {
+        return $this->demandes;
+    }
+
+    public function addDemande(Demande $demande): self
+    {
+        if (!$this->demandes->contains($demande)) {
+            $this->demandes[] = $demande;
+            $demande->setAgent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemande(Demande $demande): self
+    {
+        if ($this->demandes->contains($demande)) {
+            $this->demandes->removeElement($demande);
+            // set the owning side to null (unless already changed)
+            if ($demande->getAgent() === $this) {
+                $demande->setAgent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function setAgent(?Agent $agent): self
+    {
+        $this->agent = $agent;
+
+        return $this;
     }
 /*
     public function setAgent(?Agent $agent): self

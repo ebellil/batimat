@@ -24,27 +24,28 @@
           			</tr>
         		</thead>
         		<tbody>
-        			{% for detail_dem in detail_demandes %}
+        			{% for dem in demandes %}
 			        <tr>
-						<td>{{detail_dem.demande.date|date('Y-m-d')}}</td>
-						<td>{{detail_dem.demande.etat ? 'Validé' : 'En cours'}}</td>
-			            <td>{{detail_dem.idmat}}</td>
-						<td>{{detail_dem.quantite}}</td>
+					{#{dump(dem)}#}
+						<td>{{dem.date|date('Y-m-d')}}</td>
+						<td>{{dem.etat ? 'Validé' : 'En cours'}}</td>
+			            <td>{{dem.idmat}}</td>
+						<td>{{dem.quantite}}</td>
 			            <!--td>
-			            	<a href="{#{ path('agentAff.detail_dem.edit', {id: detail_dem.idmat}) }#}" class="waves-effect waves-light btn">Editer</a>
+			            	<a href="{#{ path('agentAff.dem.edit', {id: dem.idmat}) }#}" class="waves-effect waves-light btn">Editer</a>
 			            </td-->
 			            <td>
-			            	<form method="post" action="{#{ path('agentAff.detail_dem.delete', {id: detail_dem.idmat}) }#}">
+			            	<form method="post" action="{#{ path('agentAff.dem.delete', {id: dem.idmat}) }#}">
 			            		<input type="hidden" name="_method" value="DELETE">
-			            		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ detail_dem.idmat) }}">
+			            		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ dem.idmat) }}">
 			            		<button class="btn waves-effect waves-light">Résilier</button>
 			            	</form>
 			            </td>
 						<td>
-							<a href="{#{ path('agentAff.detail_dem.edit', {id: detail_dem.idmat}) }#}" class="waves-effect waves-light btn">Noter</a>
+							<a href="{{ path('agentAff.demande.note.newNote', {id: dem.numcommande}) }}" class="waves-effect waves-light btn">Noter</a>
 						</td>
 						<td>
-							<a href="{#{ path('agentAff.detail_dem.edit', {id: detail_dem.idmat}) }#}" class="waves-effect waves-light btn">Rédiger un rapport</a>
+							<a href="{{ path('agentAff.demande.rapport.newRapport', {id: dem.numcommande}) }}" class="waves-effect waves-light btn">Rédiger un rapport</a>
 						</td>
 			        </tr>
 			        {% endfor %}

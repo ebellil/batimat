@@ -59,14 +59,14 @@ class AgentAffMaterielController extends AbstractController{
 
 
     /**
-	 * @Route("/agentAff/detaildemandes/index", name="agentAff.detaildemandes.view")
+	 * @Route("/agentAff/demandes/index", name="agentAff.demandes.view")
 	 * @return \Symony\Component\HttpFoundation\Response
 	 */
 	public function index_1(){
         //$detail_demandes = $this->repository->findAll();
-        $detail_demandes = $this->getDoctrine()->getRepository(Detaildemande::class)->findAll();
-
-		return $this->render('agentAff/detail_demande/index.html.twig', compact('detail_demandes'));
+		$Repodemandes = $this->getDoctrine()->getRepository(Demande::class);
+		$demandes = $Repodemandes->findAll();
+		return $this->render('agentAff/demande/index.html.twig', compact('demandes'));
 	}
 
 
@@ -141,14 +141,14 @@ class AgentAffMaterielController extends AbstractController{
     }
 
     /**
-	*@Route("/agentAff/{slug}-{id}", name="materiel.show1", requirements={"slug": "[a-z0-9\-]*"})
+	*@Route("/agentAff/{slug}-{id}", name="materiel.show", requirements={"slug": "[a-z0-9\-]*"})
 	*@param Materiel $materiel
 	*@return Response
 	*/
 	public function show(Materiel $materiel, string $slug): Response{
 		
 		if($materiel->getSlug() !== $slug){
-			return $this->redirectToRoute('materiel.show1', [
+			return $this->redirectToRoute('materiel.show', [
 				'id' => $materiel->getIdMat(),
 				'slug' => $materiel->getSlug() 
 			],301);
@@ -156,37 +156,71 @@ class AgentAffMaterielController extends AbstractController{
 		return $this->render('agentAff/materiel/show.html.twig', ['materiel' => $materiel, 'current_menu' => 'materiels']);
 	}
 
+
     /**
 	 * @Route("/agentAff/materiel/commander/{id}", name="agentAff.materiel.commander", methods="GET|POST")
 	 */
 	public function commander(int $id, Request $request){
 		$em = $this->getDoctrine()->getManager();
-
 		// ajout de la demande
 		$demande = new Demande();
-        $form = $this->createForm(DemandeType::class, $demande);
-        $form->handleRequest($request);
-		$userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
-		$demande->setIdagentaff($userId);
-		$this->em->persist($demande);
-		$this->em->flush();
+			$userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
+			$quantite = $request->query->get('qute');
 
+			$demande->setIdagentaff($userId);
+			$demande->setQuantite($quantite);
+			$demande->setIdmat($id);
+        //$form = $this->createForm(DemandeType::class, $demande);
+		//$form->handleRequest($request);
+		//$this->em->persist($demande);
+		//$this->em->flush();
+		
+		$repository = $this->getDoctrine()->getRepository(Materiel::class);
+		$materiel = $repository->find($id);
+
+
+		//génerer aléatoirement la quantité
+		//$quantite = rand ( 0 , $materiel->getStock());
+	
+		
+		$sql ='INSERT INTO demande (`Date`, `Etat`, `idMat`, `idagentaff`, `Quantite`) 
+		VALUES ("'.$demande->getDate()->format('Y-m-d').'", 
+				0, 
+				"'.$id.'",
+				"'. $userId.'",
+				"'. $quantite .'")';
+		$connection = $this->em->getConnection();
+		$connection->executeUpdate($sql, array());
+
+
+
+		//$this->em->persist($demande);
+		//$this->em->flush();
+
+
+		//$this->render('agentAff/materiel/show.html.twig', [
+	//		'materiels' => $materiels,
+	//	]);
+
+	//dump($request);
+		
         //ajout de détail demande
-        $em = $this->getDoctrine()->getManager();
-        $detail_d= new Detaildemande();
-		$detail_d->setDemande($demande);
-		dump($request);
+		//$em = $this->getDoctrine()->getManager();
+		
+
+        //$detail_d= new Detaildemande();
+		//$detail_d->setDemande($demande);
 		//dump($request->request->get('quantity'));
         //$detail_d->setQuantite($request->request->get('quantity'));
 
-		$detail_d->setQuantite(9);
-        $detail_d->setIdmat($id);
-        $form = $this->createForm(DetaildemandeType::class, $detail_d);
-        $form->handleRequest($request);
+		//$detail_d->setQuantite($quantite);
+        //$detail_d->setIdmat($id);
+        //$form = $this->createForm(DetaildemandeType::class, $detail_d);
+        //$form->handleRequest($request);
         //if($form->isSubmitted() && $form->isValid()){
-            $this->em->persist($detail_d);
-            $this->addFlash('success', 'La demande de matériel a bien été ajoutée');
-            $this->em->flush();
+            //$this->em->persist($detail_d);
+            //$this->addFlash('success', 'La demande de matériel a bien été ajoutée');
+            //$this->em->flush();
                 return $this->redirectToRoute('agentAff.home', [
                 'detail_d' => '$detail_d',
                 //'materiels' => $materiels,
@@ -196,7 +230,7 @@ class AgentAffMaterielController extends AbstractController{
     }
     
     /**
-	 * @Route("/agentAff/materiel/commander/{id}", name="agentAff.materiel.commander.edit", methods="GET|POST")
+	 * @Route("/agentAff/materiel/editer/{id}", name="agentAff.materiel.edit", methods="GET|POST")
 	 * @param Materiel $materiel
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response
@@ -216,7 +250,7 @@ class AgentAffMaterielController extends AbstractController{
     }
     
     /**
-	 * @Route("/agentAff/materiel/delete/{id}", name="agentAff.materiel.commander.delete", methods="DELETE")
+	 * @Route("/agentAff/materiel/delete/{id}", name="agentAff.materiel.delete", methods="DELETE")
 	 * @param Materiel $materiel
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -237,36 +271,59 @@ class AgentAffMaterielController extends AbstractController{
     }
     
 
-    	/**
-	 * @Route("/fournisseur/rapport/ajouter/{id}", name="adminGene.fournisseur.rapport.newRapport")
-	 * @param Fournisseur $fournisseur
+    /**
+	 * @Route("/agentAff/demande/rapport/ajouter/{id}", name="agentAff.demande.rapport.newRapport")
 	 * @param Request $request
 	 * @return \Symony\Component\HttpFoundation\Response
 	 */
-	public function newRapport(Fournisseur $fournisseur, Request $request){
-		$fournisseurRapport = new FournisseurRapport();
-		$form = $this->createForm(FournisseurRapportType::class, $fournisseurRapport);
-		$form->handleRequest($request);
-		//DetaildemanderapportType
-		if($form->isSubmitted() && $form->isValid()){
 
-		
-			$sql ='INSERT INTO fournisseur_rapport (`fournisseur_id`, `rapport`, `admingeneral_id`) 
-				VALUES ("'.$fournisseur->getId().'", 
-						"'.$form->get('rapport')->getData().'", 
-						"'. $this->getUser()->getId().'")';
-			$connection = $this->em->getConnection();
-			$connection->executeUpdate($sql, array());
-			$this->addFlash('success', 'Le rapport a bien été ajouté');
-			
-			return $this->redirectToRoute('adminGene.fournisseur.rapport.indexRapport');
+	 public function newRapport(int $id, Request $request){
+		 //dump($request);
+		 $demandeRepo = $this->getDoctrine()->getRepository(Demande::class);
+		 $demande = $demandeRepo->findOneBy( ['numcommande' => $id] );
+		 $em = $this->getDoctrine()->getManager();
+
+		$rapport="test rapport";
+		 if($request->request->count() > 0){
+			$rapport = $request->request->get("content");
+			$demande->setRapport($rapport);
+		 }
+
+		 $sql ='UPDATE `demande` SET `rapport` = "'.$rapport.'" WHERE `NumCommande` = '.$id;
+		 $connection = $this->em->getConnection();
+		 $connection->executeUpdate($sql, array());
+
+		return $this->render('agentAff/demande/newRapport.html.twig',[
+			'demande' => $demande
+		]);
+	 }
+
+
+	/**
+	 * @Route("/agentAff/demande/note/ajouter/{id}", name="agentAff.demande.note.newNote")
+	 * @param Request $request
+	 * @return \Symony\Component\HttpFoundation\Response
+	 */
+
+	public function noter(int $id, Request $request){
+		//dump($request);
+		$demandeRepo = $this->getDoctrine()->getRepository(Demande::class);
+		$demande = $demandeRepo->findOneBy( ['numcommande' => $id] );
+		$em = $this->getDoctrine()->getManager();
+
+	   $note=1;
+		if($request->request->count() > 0){
+		   $note = $request->request->get("note");
+		   $demande->setNote($note);
 		}
 
-		return $this->render('adminGene/fournisseur/rapport/newRapport.html.twig', [
-			'fournisseurRapport' => $fournisseurRapport,
-			'form' => $form->createView()
-		]);
-	}
+		$sql ='UPDATE `demande` SET `note` = "'.$note.'" WHERE `NumCommande` = '.$id;
+		$connection = $this->em->getConnection();
+		$connection->executeUpdate($sql, array());
 
+	   return $this->render('agentAff/demande/noter.html.twig',[
+		   'demande' => $demande
+	   ]);
+	}
 
 }

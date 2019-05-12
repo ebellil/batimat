@@ -3,22 +3,63 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <link rel="icon" type="image/png" href="{{ asset('images/logo_final.png') }}" />
         <title>{% block title %}{% endblock %}</title>
-        {% block stylesheets %} 
         <link href="{{ asset('build/css/materialize.min.css') }}" rel="stylesheet"/>
-          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  			{% endblock %}
+        <link href="{{ asset('build/css/style.css') }}" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+        {% block stylesheets %} {% endblock %}
     </head>
+     <main>
     <body>	
     	<header>
       	<div class="navbar-fixed">
+        <!--Dropdown-->
+        <ul id="dropdown1" class="dropdown-content">
+            <li>
+              <a href="{{ path('adminGene.fournisseur.index') }}">
+                Gérer les Fournisseurs
+              </a>
+            </li>
+            <li>
+              <a href="{{ path('adminGene.fournisseur.rapport.indexRapport') }}">
+                Gérer les rapports
+              </a>
+            </li>
+            <li>
+              <a href="{{ path('adminGene.fournisseur.notation.index') }}">
+                Noter les Fournisseurs
+              </a>
+            </li>   
+        </ul>
+        <!--Fin Dropdown-->
 			    <nav>
 			      <div class="nav-wrapper">
-              <a href="{{ path('adminGene.home') }}" class="brand-logo" ><img src="../images/logo_final.png" alt="logo"></img></a>
+              <!--Logo-->
+              <a href="{{ path('adminGene.home') }}" class="brand-logo" >
+                <img src="{{ asset('images/logo_final.png') }}"  alt="logo"></img>
+              </a>
+              <!--Fin Logo-->
+              <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+     
 		          <ul class="right hide-on-med-and-down">
-                <li><a href="{{ path('adminGene.fournisseur.index') }}">Fournisseurs</a></li>
-                <li><a href="{{ path('adminGene.materiel.index') }}">Matériels</a></li>
-                <li><a href="{{ path('adminGene.categorie.index') }}">Catégories</a></li>  
+              
+                <li>
+                  <a href="{{ path('adminGene.demande.index')}}">
+                    Demandes
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-trigger" href="#!" data-target="dropdown1">
+                    Fournisseurs<i class="material-icons right">arrow_drop_down</i>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ path('adminGene.materiel.index') }}">Matériels</a>
+                </li>
+                <li>
+                  <a href="{{ path('adminGene.categorie.index') }}">Catégories</a>
+                </li>  
                 {% if app.user %}
                 <li><a href="{{ path('logout') }}">Se déconnecter</a></li>
                 {% endif %}          
@@ -26,21 +67,68 @@
             </div>
 				  </nav>
  				</div>
+
+          <!--Dropdown Mobile-->
+        <ul id="dropdownMobile" class="dropdown-content">
+            <li>
+              <a href="{{ path('adminGene.fournisseur.index') }}">
+                Gérer les Fournisseurs
+              </a>
+            </li>
+            <li>
+              <a href="{{ path('adminGene.fournisseur.rapport.indexRapport') }}">
+                Gérer les rapports
+              </a>
+            </li>
+            <li>
+              <a href="{{ path('adminGene.fournisseur.notation.index') }}">
+                Noter les Fournisseurs
+              </a>
+            </li>   
+        </ul>
+        <!--Fin Dropdown Mobile-->
+        <!--Nav Mobile-->
+        <ul id="nav-mobile" class="sidenav">
+          <li>
+            <a href="{{ path('adminGene.demande.index')}}">
+              Demandes
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-trigger" href="#!" data-target="dropdownMobile">
+                    Fournisseurs<i class="material-icons right">arrow_drop_down</i>
+            </a>
+          </li>
+                <li><a href="{{ path('adminGene.materiel.index') }}">Matériels</a></li>
+                <li><a href="{{ path('adminGene.categorie.index') }}">Catégories</a></li>  
+                {% if app.user %}
+                <li><a href="{{ path('logout') }}">Se déconnecter</a></li>
+                {% endif %}          
+            </ul>
+        <!--Fin Nav Mobile-->
+         
       </header>
       {% block body %}{% endblock %}
- <!--<script src="{{asset('build/js/jquery-3.3.1.min.js')}}"></script>-->
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        
+      <script>
+        $(document).ready(function(){
+          $('.sidenav').sidenav();
+        });
+
+        $(".dropdown-trigger").dropdown();
+        $("#dropdownMobile").dropdown();
+      </script>
       {% block javascripts %}{% endblock %}
 
   </body>
+   </main>
 
       <footer class="page-footer">
         
           <div class="footer-copyright">
             <div class="container">
-            © 2019 Copyright Text
+            © 2019 Batimat
             
             </div>
           </div>

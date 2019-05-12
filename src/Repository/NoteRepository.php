@@ -19,6 +19,45 @@ class NoteRepository extends ServiceEntityRepository
         parent::__construct($registry, Note::class);
     }
 
+    public function findByFournisseur($idF)
+    {
+      
+        return $this->createQueryBuilder('note')
+            ->andWhere('note.fournisseur = :idF')
+            ->setParameter('idF', $idF)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByFandU($idF, $idU)
+    {
+      
+        return $this->createQueryBuilder('note')
+            ->andWhere('note.fournisseur = :idF')
+            ->andWhere('note.admingeneral = :idU')
+            ->setParameter('idF', $idF)
+            ->setParameter('idU', $idU)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function updateNote($idF, $idU, $note)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->update(Note::class, 'n')
+            ->set('n.note', '?1')
+            ->andWhere('n.fournisseur = ?2')
+            ->andWhere('n.admingeneral = ?3')
+            ->setParameter(1, $note)
+            ->setParameter(2, $idF)
+            ->setParameter(3, $idU)
+        ;
+       return $q = $qb->getQuery();
+    }
+
+
     // /**
     //  * @return Note[] Returns an array of Note objects
     //  */

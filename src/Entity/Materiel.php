@@ -6,6 +6,7 @@ use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -67,9 +68,15 @@ class Materiel
      */
     private $images;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Demande", mappedBy="materiel")
+     */
+    private $demandes;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->demandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -195,6 +202,37 @@ class Materiel
     {
         $image->setMateriel(null);
        $this->images->removeElement($image);
+    }
+
+    /**
+     * @return Collection|Demande[]
+     */
+    public function getDemandes(): Collection
+    {
+        return $this->demandes;
+    }
+
+    public function addDemande(Demande $demande): self
+    {
+        if (!$this->demandes->contains($demande)) {
+            $this->demandes[] = $demande;
+            $demande->setMateriel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemande(Demande $demande): self
+    {
+        if ($this->demandes->contains($demande)) {
+            $this->demandes->removeElement($demande);
+            // set the owning side to null (unless already changed)
+            if ($demande->getMateriel() === $this) {
+                $demande->setMateriel(null);
+            }
+        }
+
+        return $this;
     }
 
    

@@ -4,10 +4,23 @@
 
 {% block body %}
 	<div class="container">
-	<h1>Ajouter un fournisseur</h1>
+	<h1>Ajouter un rapport</h1>
+		{% if error %}
+			<div class="card-panel red darken-1">
+				{{ error }}
+			</div>
+		{% endif %}
 		{{ include('adminGene/form/_form.html.twig', {button: 'Ajouter'}) }}
 	</div>
 
 {% endblock %}
 
+{% block javascripts %}
+   
+     <script type="text/javascript"> 
+   $(document).ready(function(){
+    $('select').formSelect();
+  });
+    </script>
+{% endblock %}
 

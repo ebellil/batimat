@@ -39,28 +39,25 @@
 
 		<h5>En stock {{materiel.stock}}</h5>
 			<div class="row"> 
+				<form action="{{ path('agentAff.materiel.commander', {id: materiel.id}) }}">
 					<div class="input-field col s3">
+											{% set foo = '5' %}
+											<input id="prodId" name="matId" type="hidden" value={{ materiel.id }}>
+							<input id="valeurArecuperer1" name="qute" type="number" class="validate" min="1" max={{materiel.stock}} required>
+							<label for="quantity9">Quantité</label>
+							<!--a type="submit" href="{{ path('agentAff.materiel.commander', {id: materiel.id, test: foo }) }}" class="waves-effect waves-light btn-large">Commander</a-->
 
-						<input name="quantity" type="number"  class="validate">
-
-									
-
-						<label for="quantity9">Quantité</label>
-						{#{ include('agentAff/form/_form.html.twig', {button: 'Quantité'}) }#}
 					</div>
 					<div class="container">
-						<a href="{{ path('agentAff.materiel.commander', {id: materiel.id }) }}" class="waves-effect waves-light btn-large">Commander</a>
+						 <input type="submit" href="{{ path('agentAff.materiel.commander', {id: materiel.id, test: foo }) }}" class="waves-effect waves-light btn-large" value="Commander">
 					</div>
-			</div>
+				</form>
 
-							<form action="" method="post">
-									<input name="intest" type="number" placeholder="saisir nombre" >
-									<textarea name="content" placeholder="contenu"></textarea>
-									<button type="submit" >Enregistrer</button>
-							</form>
+			</div>
 
 
 	</div>
+
 
 
 {% endblock %}
@@ -68,6 +65,8 @@
 
 {% block javascripts %}
 <script type="text/javascript"> 
+
+
 	$('.carousel.carousel-slider').carousel({
 		fullWidth: true,
 		indicators: true

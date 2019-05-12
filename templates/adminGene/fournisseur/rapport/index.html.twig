@@ -17,37 +17,33 @@
         		<thead>
           			<tr>
               			<th>Libellé</th>
-              			<th></th>
-						<th>Actions</th>
+              			
 						<th></th>
+						<th>Actions</th>
+							<th></th>
           			</tr>
         		</thead>
         		<tbody>
-        			{% for fournisseur in fournisseurs %}
+        			{% for rapport in fournisseursRapport %}
 			        <tr>
-			            <td>{{fournisseur.matriculeF}}</td>
-						<td><a href="{{ path('adminGene.fournisseur.rapport.newRapport', {id: fournisseur.id}) }}" class="waves-effect waves-light btn">Ajouter Rapport</a>
-			           		
+			            <td>{{rapport.fournisseur.matriculeF}}</td>	
+						<td></td>
 			            <td>
-						{% for fRapport in fournisseur.fournisseurRapports %}
-							<a href="{{ path('adminGene.fournisseur.rapport.editRapport', {id: fournisseur.id, idRapport: fRapport.id}) }}" class="waves-effect waves-light btn">Modifier rapport</a>
-			           	{% endfor %}
+							<a href="{{ path('adminGene.fournisseur.rapport.editRapport', {id: rapport.fournisseur.id, idRapport: rapport.id}) }}" class="waves-effect waves-light btn">Modifier rapport</a>
 						</td>
 			            <td>
-							{% for fRapport in fournisseur.fournisseurRapports %}
-			            	<form method="post" action="{{ path('adminGene.fournisseur.rapport.deleteRapport', {id: fRapport.id}) }}">
+			            	<form method="post" action="{{ path('adminGene.fournisseur.rapport.deleteRapport', {id: rapport.id}) }}">
 			            		<input type="hidden" name="_method" value="DELETE">
-			            		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ fRapport.id) }}">
+			            		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ rapport.id) }}">
 			            		<button class="btn waves-effect waves-light">Supprimer</button>
 			            	</form>
-							    	{% endfor %}
 			            </td>
-					
-						
 			        </tr>
 			        {% endfor %}
         		</tbody>
       		</table>
+			  <td><a href="{{ path('adminGene.fournisseur.rapport.newRapport') }}" class="waves-effect waves-light btn">Ajouter Rapport</a>
+			           	
       		
 		</div>
 	</div>
