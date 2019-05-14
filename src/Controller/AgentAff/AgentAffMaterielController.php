@@ -170,18 +170,12 @@ class AgentAffMaterielController extends AbstractController{
 			$demande->setIdagentaff($userId);
 			$demande->setQuantite($quantite);
 			$demande->setIdmat($id);
-        //$form = $this->createForm(DemandeType::class, $demande);
-		//$form->handleRequest($request);
-		//$this->em->persist($demande);
-		//$this->em->flush();
 		
 		$repository = $this->getDoctrine()->getRepository(Materiel::class);
 		$materiel = $repository->find($id);
 
-
 		//génerer aléatoirement la quantité
 		//$quantite = rand ( 0 , $materiel->getStock());
-	
 		
 		$sql ='INSERT INTO demande (`Date`, `Etat`, `idMat`, `idagentaff`, `Quantite`) 
 		VALUES ("'.$demande->getDate()->format('Y-m-d').'", 
@@ -192,39 +186,8 @@ class AgentAffMaterielController extends AbstractController{
 		$connection = $this->em->getConnection();
 		$connection->executeUpdate($sql, array());
 
-
-
-		//$this->em->persist($demande);
-		//$this->em->flush();
-
-
-		//$this->render('agentAff/materiel/show.html.twig', [
-	//		'materiels' => $materiels,
-	//	]);
-
-	//dump($request);
-		
-        //ajout de détail demande
-		//$em = $this->getDoctrine()->getManager();
-		
-
-        //$detail_d= new Detaildemande();
-		//$detail_d->setDemande($demande);
-		//dump($request->request->get('quantity'));
-        //$detail_d->setQuantite($request->request->get('quantity'));
-
-		//$detail_d->setQuantite($quantite);
-        //$detail_d->setIdmat($id);
-        //$form = $this->createForm(DetaildemandeType::class, $detail_d);
-        //$form->handleRequest($request);
-        //if($form->isSubmitted() && $form->isValid()){
-            //$this->em->persist($detail_d);
-            //$this->addFlash('success', 'La demande de matériel a bien été ajoutée');
-            //$this->em->flush();
                 return $this->redirectToRoute('agentAff.home', [
                 'detail_d' => '$detail_d',
-                //'materiels' => $materiels,
-                //'form' => $form->createView()
             ]);
         //}
     }
@@ -249,26 +212,44 @@ class AgentAffMaterielController extends AbstractController{
 		]);
     }
     
-    /**
-	 * @Route("/agentAff/materiel/delete/{id}", name="agentAff.materiel.delete", methods="DELETE")
+    /*
+	 * @Route("/agentAff/materiel/commande/delete/{id}", name="agentAff.materiel.commande.delete", methods="DELETE")
 	 * @param Materiel $materiel
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
-	 */
-	public function delete(Materiel $materiel, Request $request){
-        $Detaildemanderepository = $this->getDoctrine()->getRepository(Detaildemande::class);
-
+	 
+	public function delethe(int $id, Request $request){
+		dump($request);
         $Demanderepository = $this->getDoctrine()->getRepository(Demande::class);
 
-        $detail_d = $Detaildemanderepository->findOneBy( ['idmat' => $materiel->getId()] );
-		if($this->isCsrfTokenValid('delete' . $materiel->getId(), $request->get('_token'))){
+		$demande = $Demanderepository->findOneBy( ['numcommande' => $id] );
+		dump($demande);
+		if($this->isCsrfTokenValid('delete' . $id, $request->get('_token'))){
             //cherche le détail d'une demande à partir de l'id d'un matériel
-			$this->em->remove($materiel);
+			$this->em->remove($demande);
 			$this->addFlash('success', 'Le matériel a bien été supprimé de la demande');
 			$this->em->flush();
 		}
-		return $this->redirectToRoute('agentAff.materiel.index');
-    }
+		dump($request);
+		return "";
+	}*/
+	
+	 /**
+	 * @Route("/agentAff/materiel/commande/delete/{id}", name="agentAff.materiel.commande.delete", methods="DELETE")
+	 * @param Demande $demande
+	 * @param Request $request
+	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
+	 */
+	public function delete(Demande $demande, Request $request){
+	
+		if($this->isCsrfTokenValid('delete' . $demande->getNumcommande(), $request->get('_token'))){
+			$this->em->remove($demande);
+			$this->addFlash('success', 'Le matériel a bien été supprimé');
+			$this->em->flush();
+		}
+		return $this->redirectToRoute('agentAff.demandes.view');
+	}
+
     
 
     /**

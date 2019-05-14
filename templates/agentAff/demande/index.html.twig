@@ -35,11 +35,16 @@
 			            	<a href="{#{ path('agentAff.dem.edit', {id: dem.idmat}) }#}" class="waves-effect waves-light btn">Editer</a>
 			            </td-->
 			            <td>
-			            	<form method="post" action="{#{ path('agentAff.dem.delete', {id: dem.idmat}) }#}">
+			            	<form method="post" action="{{ path('agentAff.materiel.commande.delete', {id: dem.numcommande}) }}">
 			            		<input type="hidden" name="_method" value="DELETE">
-			            		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ dem.idmat) }}">
-			            		<button class="btn waves-effect waves-light">Résilier</button>
+			            		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ dem.numcommande) }}">
+			            		<button type="submit" class="btn waves-effect waves-light">Résilier</button>
+								<!--<input type="submit" href="{{ path('agentAff.materiel.commande.delete', {id: dem.numcommande }) }}" class="waves-effect waves-light btn" value="Résilier">
+-->
 			            	</form>
+
+							
+								
 			            </td>
 						<td>
 							<a href="{{ path('agentAff.demande.note.newNote', {id: dem.numcommande}) }}" class="waves-effect waves-light btn">Noter</a>
