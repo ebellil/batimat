@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost:3306
--- Généré le :  Lun 13 Mai 2019 à 16:29
+-- Généré le :  Mar 14 Mai 2019 à 16:44
 -- Version du serveur :  5.7.26-0ubuntu0.18.04.1
 -- Version de PHP :  7.2.17-0ubuntu0.18.04.1
 
@@ -79,7 +79,8 @@ INSERT INTO `agent` (`id`, `adresse`) VALUES
 (39, 'testAgentAff2'),
 (40, 'testAgentAff3'),
 (41, 'testAdminGene1'),
-(42, 'testAgentAff1');
+(42, 'testAgentAff1'),
+(43, 'agentAff');
 
 -- --------------------------------------------------------
 
@@ -102,7 +103,8 @@ INSERT INTO `agentaffagence` (`id`, `MatriculeAg`, `Agence`, `VilleAgence`) VALU
 (4, 'MatriculeAgentAff', 'Agence1', 'VilleAgence'),
 (39, 'testAgentAff2', 'testAgentAff2', 'testAgentAff2'),
 (40, 'testAgentAff3', 'testAgentAff3', 'testAgentAff3'),
-(42, 'testAgentAff1', 'testAgentAff1', 'testAgentAff1');
+(42, 'testAgentAff1', 'testAgentAff1', 'testAgentAff1'),
+(43, 'agentAff', 'agentAff', 'agentAff');
 
 -- --------------------------------------------------------
 
@@ -149,7 +151,7 @@ CREATE TABLE `demande` (
 --
 
 INSERT INTO `demande` (`NumCommande`, `Date`, `Etat`, `idMat`, `idagentaff`, `quantite`, `rapport`, `note`) VALUES
-(49, '2019-05-13', 0, 8, 4, 4, NULL, 0.3);
+(69, '2019-05-14', 1, 27, 4, 40, 'dgsdgs', 4);
 
 -- --------------------------------------------------------
 
@@ -246,7 +248,12 @@ CREATE TABLE `image` (
 --
 
 INSERT INTO `image` (`id`, `materiel_id`, `image_name`, `updated_at`) VALUES
-(2, 8, '5c8f89bbbad3a473341165.JPG', '2019-03-18 13:06:21');
+(2, 8, '5c8f89bbbad3a473341165.JPG', '2019-03-18 13:06:21'),
+(36, 27, '5cd9e5488bb9b851094261.jpeg', '2019-05-13 23:44:40'),
+(37, 28, '5cd9e57d8bfb6064722466.jpg', '2019-05-13 23:45:33'),
+(38, 29, '5cd9e59c1602a315152870.jpeg', '2019-05-13 23:46:04'),
+(39, 30, '5cd9e5c920d67778233951.jpg', '2019-05-13 23:46:49');
+
 -- --------------------------------------------------------
 
 --
@@ -267,7 +274,10 @@ CREATE TABLE `materiel` (
 --
 
 INSERT INTO `materiel` (`id`, `Libelle`, `Description`, `Stock`, `idCat`, `idF`) VALUES
-(3, 'Brouette', 'brouette couleur orange', 900, 1, 1);
+(27, 'casque', 'couleur jaune', 660, 1, 1),
+(28, 'aiguille vibrante', 'aiguille', 25, 6, 1),
+(29, 'casque', 'singer', 200, 1, 1),
+(30, 'combinaison', 'taille M', 48, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -462,7 +472,7 @@ ALTER TABLE `categorie`
 -- AUTO_INCREMENT pour la table `demande`
 --
 ALTER TABLE `demande`
-  MODIFY `NumCommande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `NumCommande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 --
 -- AUTO_INCREMENT pour la table `demandematerielrapport`
 --
@@ -482,12 +492,12 @@ ALTER TABLE `fournisseur_rapport`
 -- AUTO_INCREMENT pour la table `image`
 --
 ALTER TABLE `image`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT pour la table `materiel`
 --
 ALTER TABLE `materiel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT pour la table `note`
 --
@@ -497,7 +507,7 @@ ALTER TABLE `note`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- Contraintes pour les tables exportées
 --
@@ -516,37 +526,11 @@ ALTER TABLE `agentaffagence`
   ADD CONSTRAINT `agentaffagence_ibfk_1` FOREIGN KEY (`id`) REFERENCES `agent` (`id`) ON DELETE CASCADE;
 
 --
--- Contraintes pour la table `demande`
---
-ALTER TABLE `demande`
-  ADD CONSTRAINT `FK_13AGENTAFF` FOREIGN KEY (`idagentaff`) REFERENCES `agentaffagence` (`id`),
-  ADD CONSTRAINT `FK_13IDMAT` FOREIGN KEY (`idMat`) REFERENCES `materiel` (`id`);
-
---
 -- Contraintes pour la table `demandematerielrapport`
 --
 ALTER TABLE `demandematerielrapport`
   ADD CONSTRAINT `FK_9C71F47A670C757F` FOREIGN KEY (`fournisseur_id`) REFERENCES `fournisseur` (`id`),
   ADD CONSTRAINT `FK_9C71F47A748960DE` FOREIGN KEY (`admingeneral_id`) REFERENCES `admingeneachat` (`id`);
-
---
--- Contraintes pour la table `detaildemande`
---
-ALTER TABLE `detaildemande`
-  ADD CONSTRAINT `FK_12NUMCOMMANDE` FOREIGN KEY (`numcommande`) REFERENCES `demande` (`NumCommande`);
-
---
--- Contraintes pour la table `fournisseur_rapport`
---
-ALTER TABLE `fournisseur_rapport`
-  ADD CONSTRAINT `FK_6CF4EF31670C757F` FOREIGN KEY (`fournisseur_id`) REFERENCES `fournisseur` (`id`),
-  ADD CONSTRAINT `FK_6CF4EF31748960DE` FOREIGN KEY (`admingeneral_id`) REFERENCES `admingeneachat` (`id`);
-
---
--- Contraintes pour la table `image`
---
-ALTER TABLE `image`
-  ADD CONSTRAINT `FK_C53D045F16880AAF` FOREIGN KEY (`materiel_id`) REFERENCES `materiel` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
