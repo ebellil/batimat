@@ -13,7 +13,7 @@ use \DateTime;
 /**
  * Demande
  *
- * @ORM\Table(name="demande", indexes={@ORM\Index(name="idMat", columns={"idMat"}), @ORM\Index(name="idAgentAff", columns={"idAgentAff"})})
+ * @ORM\Table(name="demande", indexes={@ORM\Index(name="idMat", columns={"idMat"}), @ORM\Index(name="idagentaff", columns={"idagentaff"})})
  * @ORM\Entity(repositoryClass="App\Repository\DemandeRepository")
  */
 class Demande
@@ -25,11 +25,7 @@ class Demande
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $numcommande = 0;
-
-
-
-
+    private $numcommande ;
 
     /**
      * @var \DateTime
@@ -51,13 +47,12 @@ class Demande
      */
     protected $detaildemandes;
 
-
+    
     /*
      * @var int
-     *
-     * @ORM\Column(name="idAgentAff", type="integer", nullable=false)
-    
-    private $idagentaff;*/
+     * @ORM\Column(name="idagentaff", type="integer", nullable=false)
+     */
+    protected $idagentaff;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Materiel", inversedBy="demandes")
@@ -67,12 +62,30 @@ class Demande
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Agentaffagence", inversedBy="demandes")
-     * @ORM\JoinColumn(name="idAgentAff", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="idagentaff", referencedColumnName="id", nullable=false)
      */
     private $agent;
 
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $quantite;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $idmat;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $rapport;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $note;
 
     public function __construct()
     {    
@@ -80,8 +93,10 @@ class Demande
         $this->date = $temp;
         $this->etat=0;
         $this->detaildemandes = new \Doctrine\Common\Collections\ArrayCollection();
+       // $this->idagentaf = 55;
     }
-    
+
+
     public function getNumcommande(): ?int
     {
         return $this->numcommande;
@@ -147,15 +162,6 @@ class Demande
         return $this;
     }
 
-    /*
-    public function addDetaildemandes(Detaildemande $detaildemande): self
-    {
-        if (!$this->detaildemandes->contains($detaildemande)) {
-            $this->detaildemandes[] = $detaildemande;
-        }
-        return $this;
-    }
-*/
     public function removeDetaildemande(Detaildemande $detaildemande): self
     {
         if (!$this->detaildemandes->contains($detaildemande)) {
@@ -196,6 +202,54 @@ class Demande
     public function setAgent(?Agentaffagence $agent): self
     {
         $this->agent = $agent;
+
+        return $this;
+    }
+
+    public function getQuantite(): ?int
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(int $quantite): self
+    {
+        $this->quantite = $quantite;
+
+        return $this;
+    }
+
+    public function getIdmat(): ?int
+    {
+        return $this->idmat;
+    }
+
+    public function setIdmat(int $idmat): self
+    {
+        $this->idmat = $idmat;
+
+        return $this;
+    }
+
+    public function getRapport(): ?string
+    {
+        return $this->rapport;
+    }
+
+    public function setRapport(?string $rapport): self
+    {
+        $this->rapport = $rapport;
+
+        return $this;
+    }
+
+    public function getNote(): ?float
+    {
+        return $this->note;
+    }
+
+    public function setNote(?float $note): self
+    {
+        $this->note = $note;
 
         return $this;
     }

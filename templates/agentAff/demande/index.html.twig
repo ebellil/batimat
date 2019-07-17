@@ -1,0 +1,66 @@
+{% extends 'baseAgentAff.html.twig' %}
+
+{% block title 'Gérer les demandes' %}
+
+{% block body %}
+	<div class="container">
+		<h1>Gérer les demandes</h1>
+		
+		{% for message in app.flashes('success') %}
+			<div class="card-panel green accent-3">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+		<div>
+			<table>
+        		<thead>
+          			<tr>
+					  	<th>Crée le</th>
+						<th>Etat</th>
+              			<th>Libellé</th>
+						<th>Quantité</th>
+              			<th>Actions</th>
+          			</tr>
+        		</thead>
+        		<tbody>
+        			{% for dem in demandes %}
+			        <tr>
+					{#{dump(dem)}#}
+						<td>{{dem.date|date('Y-m-d')}}</td>
+						<td>{{dem.etat ? 'Validé' : 'En cours'}}</td>
+			            <td>{{dem.idmat}}</td>
+						<td>{{dem.quantite}}</td>
+			            <!--td>
+			            	<a href="{#{ path('agentAff.dem.edit', {id: dem.idmat}) }#}" class="waves-effect waves-light btn">Editer</a>
+			            </td-->
+			            <td>
+			            	<form method="post" action="{{ path('agentAff.materiel.commande.delete', {id: dem.numcommande}) }}">
+			            		<input type="hidden" name="_method" value="DELETE">
+			            		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ dem.numcommande) }}">
+			            		<button type="submit" class="btn waves-effect waves-light">Résilier</button>
+								<!--<input type="submit" href="{{ path('agentAff.materiel.commande.delete', {id: dem.numcommande }) }}" class="waves-effect waves-light btn" value="Résilier">
+-->
+			            	</form>
+
+							
+								
+			            </td>
+						<td>
+							<a href="{{ path('agentAff.demande.note.newNote', {id: dem.numcommande}) }}" class="waves-effect waves-light btn">Noter</a>
+						</td>
+						<td>
+							<a href="{{ path('agentAff.demande.rapport.newRapport', {id: dem.numcommande}) }}" class="waves-effect waves-light btn">Rédiger un rapport</a>
+						</td>
+			        </tr>
+			        {% endfor %}
+        		</tbody>
+      		</table>
+      		<!--div class="row">
+      			<a href="{#{ path('agentAff.materiel.commander') }#}" class="waves-effect waves-light btn">Ajouter</a>
+      		</div-->
+		</div>
+	</div>
+
+
+{% endblock %}

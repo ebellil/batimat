@@ -147,5 +147,12 @@ class Admingeneachat
         return $this;
     }
 
+    public function setAgent(?Agent $agent): self
+    {
+        $this->agent = $agent;
+
+        return $this;
+    }
+
 
 }

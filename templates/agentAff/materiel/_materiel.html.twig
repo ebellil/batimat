@@ -1,0 +1,19 @@
+ 
+  <div class="row">
+    <div class="col s12 m6">
+    
+      <div  class="card teal lighten-3">
+        {% if materiel.imageF %}
+            <div class="card-image">
+                    <img src="/images/materiel/{{ materiel.imageF.imageName }}">
+            </div>
+        {% endif %}
+        <div class="card-content white-text">
+          <a href="{{ path('materiel.show', {id: materiel.id, slug: materiel.slug}) }}">{{ materiel.libelle }}</a>
+          <p class="truncate">{{ materiel.description }}</p>
+        </div>
+      </div>
+    
+    </div>
+  </div>
+    

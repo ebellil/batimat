@@ -1,0 +1,20 @@
+{% extends 'baseAgentAff.html.twig' %}
+
+{% block title 'Modifier la demande' %}
+
+{% block body %}
+	<div class="container">
+	<h1>Modifier la demande</h1>
+		{{ include('agentAff/form/_form.html.twig', {button: 'Editer'}) }}
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+   
+     <script type="text/javascript"> 
+   $(document).ready(function(){
+    $('select').formSelect();
+  });
+    </script>
+{% endblock %}

@@ -105,8 +105,8 @@ class AdminGeneDemandeController extends AbstractController{
 		$materiel = $this->repositoryMateriel->find($demande->getMateriel()->getId());
 		$detailDemande = $this->repositoryDetailDemande->findByNumCommande($demande->getNumcommande());
 		
-		if($detailDemande[0]->getQuantite() < $materiel->getStock() && $materiel->getStock()-$detailDemande[0]->getQuantite() > 0){
-			$stock = $materiel->getStock()-$detailDemande[0]->getQuantite();
+		if($demande->getQuantite() < $materiel->getStock() && $materiel->getStock()-$demande->getQuantite() > 0){
+			$stock = $materiel->getStock()-$demande->getQuantite();
 			$qMateriel = $this->repositoryMateriel->enleverQte($materiel->getId(), $stock);
 			$qMateriel->execute();
 			$q = $this->repositoryDemande->validation($demande->getNumcommande());

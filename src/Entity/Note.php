@@ -73,4 +73,16 @@ class Note
         return $this;
     }
 
+    public function getAdmingeneral(): ?Admingeneachat
+    {
+        return $this->admingeneral;
+    }
+
+    public function setAdmingeneral(?Admingeneachat $admingeneral): self
+    {
+        $this->admingeneral = $admingeneral;
+
+        return $this;
+    }
+
 }

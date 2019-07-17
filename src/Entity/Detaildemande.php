@@ -23,14 +23,14 @@ class Detaildemande
     /**
      * @var float
      *
-     * @ORM\Column(name="Note", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\Column(name="Note", type="float", precision=10, scale=0, nullable=true)
      */
     private $note;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Commentaire", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="Commentaire", type="text", length=65535, nullable=true)
      */
     private $commentaire;
 
@@ -135,7 +135,7 @@ class Detaildemande
         return $this;
     }
 
-    /*
+   /* 
     public function getNumcommande(): ?int
     {
         return $this->numcommande;

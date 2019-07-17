@@ -1,48 +1,30 @@
+{#% extends 'base.html.twig' %#}
 {% extends 'baseAgentAff.html.twig' %}
 
-{% block title 'Gérer le matériel' %}
+{% block title 'Matériels' %}
 
 {% block body %}
-	<div class="container">
-		<h1>Gérer le matériel</h1>
-		
 		{% for message in app.flashes('success') %}
 			<div class="card-panel green accent-3">
 				{{ message }}
 			</div>
 		{% endfor %}
 
+	<div class="container">
+		<h1>Matériel</h1>
+		
 		<div>
-			<table>
-        		<thead>
-          			<tr>
-              			<th>Libellé</th>
-              			<th>Actions</th>
-          			</tr>
-        		</thead>
-        		<tbody>
-        			{% for materiel in materiels %}
-			        <tr>
-			            <td>{{materiel.libelle}}</td>
-			            <td>
-			            	<a href="{{ path('adminGene.materiel.edit', {id: materiel.id}) }}" class="waves-effect waves-light btn">Editer</a>
-			            </td>
-			            <td>
-			            	<form method="post" action="{{ path('adminGene.materiel.delete', {id: materiel.id}) }}">
-			            		<input type="hidden" name="_method" value="DELETE">
-			            		<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ materiel.id) }}">
-			            		<button class="btn waves-effect waves-light">Supprimer</button>
-			            	</form>
-			            </td>
-			        </tr>
-			        {% endfor %}
-        		</tbody>
-      		</table>
-      		<div class="row">
-      			<a href="{{ path('adminGene.materiel.new') }}" class="waves-effect waves-light btn">Ajouter</a>
-      		</div>
+			{% for materiel in materiels %}
+				{% include 'agentAff/materiel/_materiel.html.twig' %}
+			{% endfor %}
+		</div>
+		<div>
+    		{{ knp_pagination_render(materiels) }}
 		</div>
 	</div>
+
+
+ 
 
 
 {% endblock %}

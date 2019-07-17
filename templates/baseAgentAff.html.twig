@@ -18,29 +18,46 @@
     	<header>
       	<div class="navbar-fixed">
 			    <nav>
-			      <div class="nav-wrapper"> <div class="nav-wrapper">
+
+			      <div class="nav-wrapper">
+			        <a href="{{ path('agentAff.home') }}" class="brand-logo" ><img src="/images/logo_final.png" alt="logo"></img></a>
+   <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        
+			        <!--a href="{{ path('agentAff.home') }}" class="brand-logo">Logo</a-->
+
+
+			      <!--div class="nav-wrapper"> <div class="nav-wrapper">
               <a href="{{ path('agentAff.home') }}" class="brand-logo" >
                 <img src="{{ asset('images/logo_final.png') }}"  alt="logo"></img>
-              </a>
+              </a-->
+
+
 		          <ul class="right hide-on-med-and-down">
-                <li>
+                <!--li>
                   <a class='dropdown-trigger ' href="#" data-target='dropdown1'>Matériels<i class="material-icons right">arrow_drop_down</i>
                   </a>
+                </li-->  
+                <li>
+                  <a href="{{ path('agentAff.home') }}">Materiels</a>
+                </li> 
+                <li>
+                  <a href="{{ path('agentAff.demandes.view') }}">Demandes</a>
                 </li>  
                 <!-- Dropdown Structure -->
-                <ul id='dropdown1' class='dropdown-content'>
+                <!--ul id='dropdown1' class='dropdown-content'>
                   <li><a href="#!">Demander</a></li>
                   <li><a href="#!">Supprimer</a></li>
                   <li class="divider" tabindex="-1"></li>
                   <li><a href="#!">Noter</a></li>
                   <li><a href="#!">Visualiser</a></li>
-                </ul>
+                </ul-->
                 
-                <li><a class='dropdown-trigger ' href="#" data-target='dropdown2'>Fournisseurs</a></li>  
+                <!--li><a class='dropdown-trigger ' href="#" data-target='dropdown2'>Fournisseurs</a></li-->  
                 <!-- Dropdown Structure -->
-                <ul id='dropdown2' class='dropdown-content'>
+                <!--ul id='dropdown2' class='dropdown-content'>
                   <li><a href="#!">Visualiser</a></li>
-                </ul>
+                </ul-->
+
                 {% if app.user %}
                 <li><a href="{{ path('logout') }}">Se déconnecter</a></li>
                 {% endif %}          

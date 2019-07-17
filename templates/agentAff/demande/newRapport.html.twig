@@ -1,0 +1,31 @@
+{% extends 'baseAgentAff.html.twig' %}
+
+{% block title 'Ajouter un rapport' %}
+
+{% block body %}
+	<div class="container">
+	<h1>Ajouter un rapport</h1>
+		{#% if error %}
+			<div class="card-panel red darken-1">
+				{{ error }}
+			</div>
+		{% endif %#}
+		
+		{#{ include('adminGene/form/_form.html.twig', {button: 'Ajouter'}) }#}
+		<form action="{{ path('agentAff.demande.rapport.newRapport', {id: demande.numcommande}) }}" method="post">
+				<textarea name="content" placeholder="Contenu du rapport" class="materialize-textarea"></textarea>
+				<input type="submit" href="{{ path('agentAff.demande.rapport.newRapport', {id: demande.numcommande }) }}" class="waves-effect waves-light btn-large" value="Ajouter">
+		</form>
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+   
+     <script type="text/javascript"> 
+   $(document).ready(function(){
+    $('select').formSelect();
+  });
+    </script>
+{% endblock %}
+

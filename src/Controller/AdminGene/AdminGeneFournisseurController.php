@@ -4,6 +4,7 @@ namespace App\Controller\AdminGene;
 use App\Entity\Fournisseur;
 use App\Entity\Note;
 use App\Entity\FournisseurRapport;
+
 use App\Form\FournisseurType;
 use App\Form\FournisseurRapportType;
 use App\Form\NoteType;

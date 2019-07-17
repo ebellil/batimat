@@ -1,0 +1,82 @@
+{#% extends 'base.html.twig' %#}
+
+{% extends 'baseAgentAff.html.twig' %}
+
+{% block title materiel.libelle %}
+
+{% block body %}
+		{% for message in app.flashes('success') %}
+			<div class="card-panel green accent-3">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+	<div class="container">
+		<h3>{{materiel.libelle}}</h3>
+
+		{% if materiel.images %}
+	        <div class="row">
+	        	<div class="input-field col s12 m9 l9">
+			 <!--<img src="../images/materiel/{{ materiel.imageF.imageName }}">-->
+					<div class="carousel carousel-slider center">
+						<!--<div class="carousel-fixed-item center">
+							<a class="btn waves-effect white grey-text darken-text-2">gauche</a>
+							<a class="btn waves-effect white grey-text darken-text-2">droite</a>
+						</div>-->
+						{% for image in materiel.images %}
+						<div class="carousel-item white white-text" href="#one!">
+							<img class="responsive-img" width="650" src="../images/materiel/{{ image.imageName }}">
+						</div>
+						{% endfor %}
+					</div>
+	        	</div>
+	        </div>
+        {% endif %}
+
+		<h6>Description</h6>
+
+		<p>{{materiel.description}}</p>
+
+		<h5>En stock {{materiel.stock}}</h5>
+			<div class="row"> 
+				<form action="{{ path('agentAff.materiel.commander', {id: materiel.id}) }}">
+					<div class="input-field col s3">
+											{% set foo = '5' %}
+											<input id="prodId" name="matId" type="hidden" value={{ materiel.id }}>
+							<input id="valeurArecuperer1" name="qute" type="number" class="validate" min="1" max={{materiel.stock}} required>
+							<label for="quantity9">Quantité</label>
+							<!--a type="submit" href="{{ path('agentAff.materiel.commander', {id: materiel.id, test: foo }) }}" class="waves-effect waves-light btn-large">Commander</a-->
+
+					</div>
+					<div class="container">
+						 <input type="submit" href="{{ path('agentAff.materiel.commander', {id: materiel.id, test: foo }) }}" class="waves-effect waves-light btn-large" value="Commander">
+					</div>
+				</form>
+
+			</div>
+
+
+	</div>
+
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+<script type="text/javascript"> 
+
+
+	$('.carousel.carousel-slider').carousel({
+		fullWidth: true,
+		indicators: true
+	});
+
+
+		$('.btn').carousel({
+		fullWidth: true,
+		indicators: true
+	});
+
+       </script>
+{% endblock %}
